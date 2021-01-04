@@ -1,16 +1,13 @@
 {
-  "name": "blk-design-system-react",
+  "name": "study-war",
   "version": "1.2.0",
-  "description": "React version of BLK Design System by Creative Tim",
+  "description": "Study War Project",
   "main": "index.js",
-  "author": "Creative Tim",
-  "license": "MIT",
+  "author": "Clarisse Scofield",
+  "license": "UFMG",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/creativetimofficial/blk-design-system-react.git"
-  },
-  "bugs": {
-    "url": "https://github.com/creativetimofficial/blk-design-system-react/issues"
+    "url": "git+https://github.com/clapscofield/studyWar.git"
   },
   "homepage": "https://demos.creative-tim.com/blk-design-system-react/#/",
   "keywords": [
