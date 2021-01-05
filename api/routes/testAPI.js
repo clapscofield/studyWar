@@ -1,14 +1,25 @@
-const express = require('express'),
-  app = express(),
-  port = process.env.PORT || 5000,
-  cors = require('cors');
+const express = require('express');
+const cors = require('cors');
+const mongoose = require('mongoose');
+
+require('dotenv').config();
+
+const app = express();
+const port = process.env.PORT || 5000;
 
 app.use(cors());
-app.listen(port, () => console.log('Backend server live on ' + port));
+app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.send({ message: 'We did it!' });
+const uri = process.env.ATLAS_URI;
+mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true }
+);
+const connection = mongoose.connection;
+connection.once('open', () => {
+  console.log("MongoDB database connection established successfully");
+})
+
+app.listen(port, () => {
+    console.log(`Server is running on port: ${port}`);
 });
 
 module.exports = app;
