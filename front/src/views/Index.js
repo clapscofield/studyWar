@@ -39,7 +39,7 @@ import Download from "views/IndexSections/Download.js";
 export default function Index() {
   Axios({
     method: "GET",
-    url: "http://localhost:9000/",
+    url: "http://localhost:5000/",
     headers: {
       "Content-Type": "application/json"
     }
