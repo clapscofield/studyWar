@@ -1,8 +1,13 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express'),
+  app = express(),
+  port = process.env.PORT || 5000,
+  cors = require('cors');
 
-router.get('/', function(req, res, next) {
-    res.send('API is working properly');
+app.use(cors());
+app.listen(port, () => console.log('Backend server live on ' + port));
+
+app.get('/', (req, res) => {
+  res.send({ message: 'We did it!' });
 });
 
-module.exports = router;
+module.exports = app;
