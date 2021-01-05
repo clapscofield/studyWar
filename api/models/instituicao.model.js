@@ -11,8 +11,8 @@ const instituicaoSchema = new Schema({
   email: {type: String, required: true}
 }, {
   timestamps: true,
-});
+}, { collection : 'Instituicoes' });
 
-const Instituicao = mongoose.model('Instituicao', instituicaoSchema);
+const Instituicao = mongoose.model('Instituicoes', instituicaoSchema);
 
 module.exports = Instituicao;
