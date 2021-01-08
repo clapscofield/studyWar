@@ -1,24 +1,9 @@
 import React, { useEffect } from "react";
-import { Line } from "react-chartjs-2";
-import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  CardTitle,
-  ListGroupItem,
-  ListGroup,
-  Container,
-  Row,
-  Col
-} from "reactstrap";
+import { Button, Row, Col } from "reactstrap";
 
 // core components
 import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 import Footer from "components/Footer/Footer.js";
-
-import bigChartData from "variables/charts.js";
 
 const PaginaInicial = (props) => {
   useEffect(() => {
