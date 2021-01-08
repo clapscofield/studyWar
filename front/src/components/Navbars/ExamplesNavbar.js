@@ -1,23 +1,5 @@
-/*!
-
-=========================================================
-* BLK Design System React - v1.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/blk-design-system-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/blk-design-system-react/blob/main/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
 import { Link } from "react-router-dom";
-// reactstrap components
 import {
   Button,
   Collapse,
@@ -70,11 +52,11 @@ export default function ExamplesNavbar() {
       <Container>
         <div className="navbar-translate">
           <NavbarBrand to="/" id="navbar-brand" tag={Link}>
-            <span>BLK• </span>
-            Design System React
+            <span> SW • </span>
+            StudyWar
           </NavbarBrand>
           <UncontrolledTooltip placement="bottom" target="navbar-brand">
-            Designed and Coded by Creative Tim
+            by Clarisse Scofield
           </UncontrolledTooltip>
           <button
             aria-expanded={collapseOpen}
@@ -97,7 +79,7 @@ export default function ExamplesNavbar() {
             <Row>
               <Col className="collapse-brand" xs="6">
                 <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                  BLK•React
+                  SW•StudyWar
                 </a>
               </Col>
               <Col className="collapse-close text-right" xs="6">
@@ -153,19 +135,19 @@ export default function ExamplesNavbar() {
                 className="nav-link d-none d-lg-block"
                 color="primary"
                 target="_blank"
-                href="https://www.creative-tim.com/product/blk-design-system-pro-react?ref=bdsr-examples-navbar-upgrade-pro"
-              >
-                <i className="tim-icons icon-spaceship" /> Upgrade to PRO
+                href=""/* TODO INSERIR LINK PARA O CONHECA */
+              > 
+                <i className="tim-icons icon-spaceship" /> Entrar
               </Button>
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} to="/">
-                Back to Kit
+              <NavLink tag={Link} to="/" /* TODO INSERIR LINK*/> 
+                Planos
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="https://github.com/creativetimofficial/blk-design-system-react/issues">
-                Have an issue?
+              <NavLink href="" /* TODO INSERIR LINK*/>
+                Dúvidas
               </NavLink>
             </NavItem>
           </Nav>
