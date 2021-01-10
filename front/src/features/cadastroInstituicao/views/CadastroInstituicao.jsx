@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import classnames from "classnames";
 import {
   Button,
@@ -24,12 +24,36 @@ import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 import Footer from "components/Footer/Footer.js";
 
 const CadastroInstituicao = (props) => {
-  const [squares1to6, setSquares1to6] = React.useState("");
-  const [squares7and8, setSquares7and8] = React.useState("");
+  const [squares1to6, setSquares1to6] = useState("");
+  const [squares7and8, setSquares7and8] = useState("");
 
-  const [fullNameFocus, setFullNameFocus] = React.useState(false);
-  const [emailFocus, setEmailFocus] = React.useState(false);
-  const [passwordFocus, setPasswordFocus] = React.useState(false);
+  const [botaoHabilitado, setBotaoHabilitado] = useState(true);
+  const [fullNameFocus, setFullNameFocus] = useState(false);
+  const [descriptionFocus, setDescriptionFocus] = useState(false);
+  const [loginFocus, setLoginFocus] = useState(false);
+  const [emailFocus, setEmailFocus] = useState(false);
+  const [passwordFocus, setPasswordFocus] = useState(false);
+
+  const [nomeInstituicao, setNomeInstituicao] = useState(null);
+  const [descricao, setDescricao] = useState(null);
+  const [login, setLogin] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [senha, setSenha] = useState(null);
+  const [termosCondicoes, setTermosCondicoes] = useState(false);
+
+  useEffect(() => {
+    setBotaoHabilitado(
+      nomeInstituicao && descricao && login && email && senha && termosCondicoes
+    );
+  }, [
+    setBotaoHabilitado,
+    nomeInstituicao,
+    descricao,
+    login,
+    email,
+    senha,
+    termosCondicoes
+  ]);
 
   useEffect(() => {
     document.body.classList.toggle("register-page");
@@ -87,7 +111,7 @@ const CadastroInstituicao = (props) => {
                         alt="..."
                         src={require("assets/img/square-purple-1.png").default}
                       />
-                      <CardTitle tag="h4">Register</CardTitle>
+                      <CardTitle tag="h4">Registro</CardTitle>
                     </CardHeader>
                     <CardBody>
                       <Form className="form">
@@ -98,14 +122,54 @@ const CadastroInstituicao = (props) => {
                         >
                           <InputGroupAddon addonType="prepend">
                             <InputGroupText>
+                              <i className="tim-icons icon-bank" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            value={nomeInstituicao}
+                            placeholder="Nome da instituição"
+                            type="text"
+                            onFocus={(e) => setFullNameFocus(true)}
+                            onBlur={(e) => setFullNameFocus(false)}
+                            onChange={(e) => setNomeInstituicao(e.target.value)}
+                          />
+                        </InputGroup>
+                        <InputGroup
+                          className={classnames({
+                            "input-group-focus": descriptionFocus
+                          })}
+                        >
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="tim-icons icon-notes" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            value={descricao}
+                            placeholder="Descrição"
+                            type="text"
+                            onFocus={(e) => setDescriptionFocus(true)}
+                            onBlur={(e) => setDescriptionFocus(false)}
+                            onChange={(e) => setDescricao(e.target.value)}
+                          />
+                        </InputGroup>
+                        <InputGroup
+                          className={classnames({
+                            "input-group-focus": loginFocus
+                          })}
+                        >
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
                               <i className="tim-icons icon-single-02" />
                             </InputGroupText>
                           </InputGroupAddon>
                           <Input
-                            placeholder="Full Name"
+                            value={login}
+                            placeholder="Login"
                             type="text"
-                            onFocus={(e) => setFullNameFocus(true)}
-                            onBlur={(e) => setFullNameFocus(false)}
+                            onFocus={(e) => setLoginFocus(true)}
+                            onBlur={(e) => setLoginFocus(false)}
+                            onChange={(e) => setLogin(e.target.value)}
                           />
                         </InputGroup>
                         <InputGroup
@@ -119,10 +183,12 @@ const CadastroInstituicao = (props) => {
                             </InputGroupText>
                           </InputGroupAddon>
                           <Input
+                            value={email}
                             placeholder="Email"
                             type="text"
                             onFocus={(e) => setEmailFocus(true)}
                             onBlur={(e) => setEmailFocus(false)}
+                            onChange={(e) => setEmail(e.target.value)}
                           />
                         </InputGroup>
                         <InputGroup
@@ -136,21 +202,30 @@ const CadastroInstituicao = (props) => {
                             </InputGroupText>
                           </InputGroupAddon>
                           <Input
-                            placeholder="Password"
-                            type="text"
+                            value={senha}
+                            placeholder="Senha"
+                            type="password"
+                            autoComplete="new-password"
                             onFocus={(e) => setPasswordFocus(true)}
                             onBlur={(e) => setPasswordFocus(false)}
+                            onChange={(e) => setSenha(e.target.value)}
                           />
                         </InputGroup>
                         <FormGroup check className="text-left">
                           <Label check>
-                            <Input type="checkbox" />
-                            <span className="form-check-sign" />I agree to the{" "}
+                            <Input
+                              type="checkbox"
+                              onChange={(e) =>
+                                setTermosCondicoes(e.target.checked)
+                              }
+                            />
+                            <span className="form-check-sign" />
+                            Concordo com os{" "}
                             <a
                               href="#pablo"
                               onClick={(e) => e.preventDefault()}
                             >
-                              terms and conditions
+                              termos e condições
                             </a>
                             .
                           </Label>
@@ -158,9 +233,21 @@ const CadastroInstituicao = (props) => {
                       </Form>
                     </CardBody>
                     <CardFooter>
-                      <Button className="btn-round" color="primary" size="lg">
-                        Get Started
+                      <Button
+                        className="btn-round"
+                        color="primary"
+                        size="lg"
+                        disabled={!botaoHabilitado}
+                      >
+                        Começar
                       </Button>
+                      <a
+                        href="#pablo" /* TODO Colocar o link para a pagina do login */
+                        className="ml-3"
+                        onClick={(e) => e.preventDefault()}
+                      >
+                        Já tenho conta. Ir para login.
+                      </a>
                     </CardFooter>
                   </Card>
                 </Col>
