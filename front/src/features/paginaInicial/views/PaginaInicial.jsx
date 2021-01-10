@@ -62,7 +62,7 @@ const PaginaInicial = (props) => {
                 </p>
                 <div className="btn-wrapper mb-3">
                   <p className="category text-success d-inline">
-                    Quero saber mais
+                    Entre na sua conta
                   </p>
                   <Button
                     className="btn-link"
@@ -73,7 +73,7 @@ const PaginaInicial = (props) => {
                     } /* TODO inserir link para saber mais */
                     size="sm"
                   >
-                    <i className="tim-icons icon-minimal-right" />
+                    <i className="tim-icons icon-minimal-down" />
                   </Button>
                 </div>
                 <Button

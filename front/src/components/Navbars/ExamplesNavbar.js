@@ -137,7 +137,7 @@ export default function ExamplesNavbar() {
                 target="_blank"
                 href=""/* TODO INSERIR LINK PARA O CONHECA */
               > 
-                <i className="tim-icons icon-spaceship" /> Entrar
+                <i className="tim-icons icon-spaceship" /> Cadastrar instituição
               </Button>
             </NavItem>
             <NavItem>
