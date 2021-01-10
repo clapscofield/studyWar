@@ -18,6 +18,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import store from './store.js';
+import { Provider } from 'react-redux';
 
 import "assets/css/nucleo-icons.css";
 import "assets/scss/blk-design-system-react.scss?v=1.2.0";
@@ -31,6 +33,7 @@ import PaginaInicial from "features/paginaInicial";
 import CadastroInstituicao from "features/cadastroInstituicao";
 
 ReactDOM.render(
+  <Provider store={store}>
   <BrowserRouter>
     <Switch>
       <Route path="/pagina-inicial" render={(props) => <PaginaInicial {...props} />} />
@@ -50,6 +53,7 @@ ReactDOM.render(
       />
       <Redirect from="/" to="/pagina-inicial" />
     </Switch>
-  </BrowserRouter>,
+  </BrowserRouter>
+  </Provider>,
   document.getElementById("root")
 );

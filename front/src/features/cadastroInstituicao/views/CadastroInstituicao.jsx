@@ -19,6 +19,7 @@ import {
   Row,
   Col
 } from "reactstrap";
+import axios from "axios";
 
 import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 import Footer from "components/Footer/Footer.js";
@@ -54,6 +55,25 @@ const CadastroInstituicao = (props) => {
     senha,
     termosCondicoes
   ]);
+
+  const cadastrarInstituicao = () => {
+    event.preventDefault();
+
+    const instituicao = {
+      usuario: this.state.usuario,
+      nome: this.state.usuario,
+      senha: this.state.senha,
+      descricao: this.state.descricao,
+      email: this.state.email
+    };
+
+    axios
+      .post(`https://localhost:7000/instituicao/add`, { instituicao })
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+      });
+  };
 
   useEffect(() => {
     document.body.classList.toggle("register-page");
@@ -238,6 +258,7 @@ const CadastroInstituicao = (props) => {
                         color="primary"
                         size="lg"
                         disabled={!botaoHabilitado}
+                        onClick={() => cadastrarInstituicao()}
                       >
                         Começar
                       </Button>
