@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+var db = require('../database.js');
 
 const Schema = mongoose.Schema;
 
