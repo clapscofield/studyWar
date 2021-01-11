@@ -57,8 +57,6 @@ const CadastroInstituicao = (props) => {
   ]);
 
   const cadastrarInstituicao = () => {
-    event.preventDefault();
-
     const instituicao = {
       usuario: this.state.usuario,
       nome: this.state.usuario,
