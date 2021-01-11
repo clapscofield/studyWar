@@ -58,15 +58,15 @@ const CadastroInstituicao = (props) => {
 
   const cadastrarInstituicao = () => {
     const instituicao = {
-      usuario: this.state.usuario,
-      nome: this.state.usuario,
-      senha: this.state.senha,
-      descricao: this.state.descricao,
-      email: this.state.email
+      usuario: login,
+      nome: nomeInstituicao,
+      senha: senha,
+      descricao: descricao,
+      email: email
     };
 
     axios
-      .post(`https://localhost:7000/instituicao/add`, { instituicao })
+      .post(`http://localhost:7000/instituicao/add`, { instituicao })
       .then((res) => {
         console.log(res);
         console.log(res.data);
