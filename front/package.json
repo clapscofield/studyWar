@@ -3,7 +3,7 @@
   "version": "1.2.0",
   "description": "Study War Project",
   "main": "index.js",
-  "proxy": "https://localhost:9000",
+  "proxy": "https://localhost:7000",
   "author": "Clarisse Scofield",
   "license": "UFMG",
   "repository": {

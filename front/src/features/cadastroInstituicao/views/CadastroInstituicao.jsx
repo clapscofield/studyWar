@@ -35,12 +35,12 @@ const CadastroInstituicao = (props) => {
   const [emailFocus, setEmailFocus] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
 
-  const [nomeInstituicao, setNomeInstituicao] = useState(null);
-  const [descricao, setDescricao] = useState(null);
-  const [login, setLogin] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [senha, setSenha] = useState(null);
-  const [termosCondicoes, setTermosCondicoes] = useState(false);
+  const [nomeInstituicao, setNomeInstituicao] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const [login, setLogin] = useState("");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [termosCondicoes, setTermosCondicoes] = useState("");
 
   useEffect(() => {
     setBotaoHabilitado(
@@ -65,11 +65,11 @@ const CadastroInstituicao = (props) => {
       email: email
     };
 
+    axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
     axios
-      .post(`http://localhost:7000/instituicao/add`, { instituicao })
+      .post("http://localhost:7000/instituicao/add/", { instituicao })
       .then((res) => {
         console.log(res);
-        console.log(res.data);
       });
   };
 

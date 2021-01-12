@@ -8,13 +8,15 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
+  console.log('oi');
   const usuario = req.body.usuario;
+  console.log(usuario);
   const descricao = req.body.descricao;
   const nome = req.body.nome;
   const senha = req.body.senha;
   const email = req.body.email;
 
-  const newInstituicao = new Instituicao({nome, descricao, usuario, senha, email});
+  const newInstituicao = new Instituicao({nome: nome, descricao: descricao, usuario: usuario, senha: senha, email: email});
 
   newInstituicao.save()
     .then(() => res.json('Instituição cadastrada!'))
@@ -22,3 +24,4 @@ router.route('/add').post((req, res) => {
 });
 
 module.exports = router;
+
