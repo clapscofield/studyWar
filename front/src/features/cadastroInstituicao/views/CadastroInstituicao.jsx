@@ -19,7 +19,8 @@ import {
   Row,
   Col
 } from "reactstrap";
-import axios from "axios";
+import { Redirect } from "react-router-dom";
+import CadastroInstituicaoManager from "../CadastroInstituicaoManager";
 
 import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 import Footer from "components/Footer/Footer.js";
@@ -28,6 +29,7 @@ const CadastroInstituicao = (props) => {
   const [squares1to6, setSquares1to6] = useState("");
   const [squares7and8, setSquares7and8] = useState("");
 
+  const [redirecionar, setRedirecionar] = useState(null);
   const [botaoHabilitado, setBotaoHabilitado] = useState(true);
   const [fullNameFocus, setFullNameFocus] = useState(false);
   const [descriptionFocus, setDescriptionFocus] = useState(false);
@@ -56,7 +58,7 @@ const CadastroInstituicao = (props) => {
     termosCondicoes
   ]);
 
-  const cadastrarInstituicao = () => {
+  const cadastrarInstituicao = async () => {
     const instituicao = {
       usuario: login,
       nome: nomeInstituicao,
@@ -65,12 +67,15 @@ const CadastroInstituicao = (props) => {
       email: email
     };
 
-    axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
-    axios
-      .post("http://localhost:7000/instituicao/add/", { instituicao })
-      .then((res) => {
-        console.log(res);
-      });
+    const resultadoInstituicao = await CadastroInstituicaoManager.cadastrarInstituicao(
+      instituicao
+    );
+    if (resultadoInstituicao) {
+      console.log("Criado com sucesso");
+      setRedirecionar(
+        <Redirect to={"/pagina-inicial"} />
+      ); /*TODO trocar para redirecionar para pagina de login*/
+    }
   };
 
   useEffect(() => {
@@ -306,6 +311,7 @@ const CadastroInstituicao = (props) => {
           </div>
         </div>
         <Footer />
+        {redirecionar}
       </div>
     </>
   );

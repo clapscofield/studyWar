@@ -16,7 +16,6 @@
 
 */
 import React from "react";
-import Axios from "axios";
 
 // core components
 import IndexNavbar from "components/Navbars/IndexNavbar.js";
