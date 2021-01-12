@@ -16,7 +16,6 @@
 
 */
 import React from "react";
-import Axios from "axios";
 
 // core components
 import IndexNavbar from "components/Navbars/IndexNavbar.js";
@@ -37,17 +36,6 @@ import Examples from "views/IndexSections/Examples.js";
 import Download from "views/IndexSections/Download.js";
 
 export default function Index() {
-  /* aqui está a conectado com o backend do axios no localhost */
-  Axios({
-    method: "GET",
-    url: "http://localhost:5000/",
-    headers: {
-      "Content-Type": "application/json"
-    }
-  }).then(res => {
-    console.log(res.data.message);
-  });
-
   React.useEffect(() => {
     document.body.classList.toggle("index-page");
     // Specify how to clean up after this effect:

@@ -3,7 +3,7 @@
   "version": "1.2.0",
   "description": "Study War Project",
   "main": "index.js",
-  "proxy": "https://localhost:9000",
+  "proxy": "https://localhost:7000",
   "author": "Clarisse Scofield",
   "license": "UFMG",
   "repository": {
@@ -86,5 +86,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "react-redux": "^7.2.2",
+    "redux": "^4.0.5"
   }
 }

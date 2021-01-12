@@ -134,8 +134,7 @@ export default function ExamplesNavbar() {
               <Button
                 className="nav-link d-none d-lg-block"
                 color="primary"
-                target="_blank"
-                href=""/* TODO INSERIR LINK PARA O CONHECA */
+                href="/cadastro-instituicao"
               > 
                 <i className="tim-icons icon-spaceship" /> Cadastrar instituição
               </Button>

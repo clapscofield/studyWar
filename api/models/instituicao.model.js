@@ -1,14 +1,15 @@
 const mongoose = require('mongoose');
+var db = require('../database.js');
 
 const Schema = mongoose.Schema;
 
 const instituicaoSchema = new Schema({
-  nome: { type: String, required: true },
-  descricao: { type: String, required: true },
-  usuario: { type: String, required: true, unique: true, 
+  nome: { type: String },
+  descricao: { type: String },
+  usuario: { type: String, unique: true, 
     minlength: 3},
-  senha: { type: String, required: true },
-  email: {type: String, required: true}
+  senha: { type: String },
+  email: {type: String }
 }, {
   timestamps: true,
 }, { collection : 'Instituicoes' });
