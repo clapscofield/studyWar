@@ -4,6 +4,7 @@ import { Redirect } from "react-router-dom";
 import Datetime from "react-datetime";
 import moment from "moment";
 import Footer from "components/Footer/Footer.js";
+import CriacaoGuerraEstudosManager from "../CriacaoGuerraEstudosManager";
 
 const CriarGuerraEstudos = (props) => {
   const [redirecionar, setRedirecionar] = useState(null);
@@ -28,25 +29,27 @@ const CriarGuerraEstudos = (props) => {
     nomeEquipes
   ]);
 
-  //   const cadastrarInstituicao = async () => {
-  //     const instituicao = {
-  //       usuario: login,
-  //       nome: nomeInstituicao,
-  //       senha: senha,
-  //       descricao: descricao,
-  //       email: email
-  //     };
+  const criarGuerraEstudos = async () => {
+    const guerraEstudos = {
+      dataInicio: moment(dataInicio).format("DD/MM/YYYY"),
+      dataFim: moment(dataFim).format("DD/MM/YYYY"),
+      identificador: idGuerra,
+      numeroTotalEquipes: numeroEquipes,
+      numeroAlunosPorEquipe: numeroAlunosPorEquipe
+    };
 
-  //     const resultadoInstituicao = await CadastroInstituicaoManager.cadastrarInstituicao(
-  //       instituicao
-  //     );
-  //     if (resultadoInstituicao) {
-  //       console.log("Criado com sucesso");
-  //       setRedirecionar(
-  //         <Redirect to={"/pagina-inicial"} />
-  //       ); /*TODO trocar para redirecionar para pagina de login*/
-  //     }
-  //   };
+    const resultado = await CriacaoGuerraEstudosManager.criarGuerraEstudos(
+      guerraEstudos
+    );
+
+    /*TODO falta salvar nome das equipes */
+    if (resultado) {
+      console.log("Criado com sucesso");
+      setRedirecionar(
+        <Redirect to={"/pagina-inicial"} />
+      ); /*TODO trocar para redirecionar para a continuacao */
+    }
+  };
 
   const geraCamposNomeEquipe = (numeroTotalEquipes) => {
     const inputs = [];
@@ -103,7 +106,7 @@ const CriarGuerraEstudos = (props) => {
                           timeFormat={false}
                           inputProps={{ placeholder: "Data de início" }}
                           dateFormat={"DD/MM/YYYY"}
-                          onChange={(e) => setDataInicio(e.target)}
+                          onChange={(e) => setDataInicio(e)}
                           isValidDate={validaData}
                         />
                       </Col>
@@ -113,7 +116,7 @@ const CriarGuerraEstudos = (props) => {
                           timeFormat={false}
                           inputProps={{ placeholder: "Data de fim" }}
                           dateFormat={"DD/MM/YYYY"}
-                          onChange={(e) => setDataFim(e.target)}
+                          onChange={(e) => setDataFim(e)}
                           isValidDate={validaData}
                         />
                       </Col>
@@ -156,7 +159,7 @@ const CriarGuerraEstudos = (props) => {
                     color="primary"
                     size="lg"
                     disabled={!botaoHabilitado}
-                    onClick={console.log("oi")}
+                    onClick={() => criarGuerraEstudos()}
                   >
                     Continuar
                   </Button>
