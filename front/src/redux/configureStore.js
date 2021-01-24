@@ -1,13 +1,12 @@
-import { createStore } from "redux";
-import { rootReducer, initialState } from "./reducers";
+import { createStore } from 'redux';
+import rootReducer from './rootReducer';
 
-export const configureStore = () => {
-  const store = createStore(
-    rootReducer, // root reducer
-    initialState // our initialState
-  );
+// const initialState = {
+//     instituicao: null,
+//     equipes: []
+// };
 
-  return store;
-};
+const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
-export default configureStore;
+export default store;

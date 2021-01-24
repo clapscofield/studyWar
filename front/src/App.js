@@ -11,6 +11,7 @@ import RegisterPage from "views/examples/RegisterPage.js";
 import ProfilePage from "views/examples/ProfilePage.js";
 import PaginaInicial from "features/paginaInicial";
 import CadastroInstituicao from "features/cadastroInstituicao";
+import CriarGuerraEstudos from "features/criacaoGuerraEstudos/views/criarGuerraEstudos";
 
 const App = props => {
   return (
@@ -18,6 +19,7 @@ const App = props => {
       <Switch>
         <Route path="/pagina-inicial" render={(props) => <PaginaInicial {...props} />} />
         <Route path="/cadastro-instituicao" render={(props) => <CadastroInstituicao {...props} />} />
+        <Route path="/criar-guerra" render={(props) => <CriarGuerraEstudos {...props} />} /> 
         <Route path="/components" render={(props) => <Index {...props} />} />
         <Route
             path="/landing-page"
