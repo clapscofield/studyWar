@@ -5,8 +5,12 @@ import Datetime from "react-datetime";
 import moment from "moment";
 import Footer from "components/Footer/Footer.js";
 import CriacaoGuerraEstudosManager from "../CriacaoGuerraEstudosManager";
+import { inserirEquipe } from "../../../redux/actionCreators";
+import { connect } from "react-redux";
 
 const CriarGuerraEstudos = (props) => {
+  const { inserirEquipe } = props;
+
   const [redirecionar, setRedirecionar] = useState(null);
   const [botaoHabilitado, setBotaoHabilitado] = useState(true);
 
@@ -14,8 +18,10 @@ const CriarGuerraEstudos = (props) => {
   const [dataInicio, setDataInicio] = useState(null);
   const [dataFim, setDataFim] = useState(null);
   const [numeroAlunosPorEquipe, setNumeroAlunosPorEquipe] = useState(null);
-  const [nomeEquipes, setNomeEquipes] = useState([]);
+  const [nomeEquipes, setNomeEquipes] = useState();
+  const [nome, setNome] = useState("");
   const [numeroEquipes, setNumeroEquipes] = useState(null);
+  const [geraCamposEquipes, setGeraCamposEquipes] = useState(null);
 
   useEffect(() => {
     setBotaoHabilitado(
@@ -42,26 +48,34 @@ const CriarGuerraEstudos = (props) => {
       guerraEstudos
     );
 
-    /*TODO falta salvar nome das equipes */
+    /* Nome equipes salvo no redux */
+    nomeEquipes && inserirEquipe(nomeEquipes);
+
     if (resultado) {
       console.log("Criado com sucesso");
       setRedirecionar(
         <Redirect to={"/pagina-inicial"} />
-      ); /*TODO trocar para redirecionar para a continuacao */
+      ); /*TODO trocar para redirecionar para a continuacao -> PARA CADA EQUIPE INSERIR ALUNOS */
     }
   };
 
-  const geraCamposNomeEquipe = (numeroTotalEquipes) => {
-    const inputs = [];
+  const handleChangeNomeEquipes = (nome, i) => {
+    let nomes = [...nomeEquipes];
+    let novoNome = nome;
+    nomes[i] = novoNome;
+    nomeEquipes.setState({ nomes });
+  };
 
-    for (let i = 1; i <= numeroTotalEquipes; i++) {
+  const geraCamposNomeEquipe = (numeroEquipes) => {
+    const inputs = [];
+    for (let i = 1; i <= numeroEquipes; i++) {
       inputs.push(
         <Input
           value={nomeEquipes[i]}
           placeholder={`Nome da equipe ${i}`}
           id={`input-${i}`}
           type="text"
-          onChange={(e) => setNomeEquipes([...nomeEquipes, nomeEquipes[i]])}
+          onChange={(e) => handleChangeNomeEquipes(e.event.value, i)}
           className={"mb-4"}
         />
       );
@@ -176,4 +190,10 @@ const CriarGuerraEstudos = (props) => {
   );
 };
 
-export default CriarGuerraEstudos;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    inserirEquipe: (nomeEquipes) => dispatch(inserirEquipe(nomeEquipes))
+  };
+};
+
+export default connect(null, mapDispatchToProps)(CriarGuerraEstudos);
