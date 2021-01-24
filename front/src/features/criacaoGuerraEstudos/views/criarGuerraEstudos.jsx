@@ -19,9 +19,7 @@ const CriarGuerraEstudos = (props) => {
   const [dataFim, setDataFim] = useState(null);
   const [numeroAlunosPorEquipe, setNumeroAlunosPorEquipe] = useState(null);
   const [nomeEquipes, setNomeEquipes] = useState();
-  const [nome, setNome] = useState("");
   const [numeroEquipes, setNumeroEquipes] = useState(null);
-  const [geraCamposEquipes, setGeraCamposEquipes] = useState(null);
 
   useEffect(() => {
     setBotaoHabilitado(
@@ -63,7 +61,7 @@ const CriarGuerraEstudos = (props) => {
     let nomes = [...nomeEquipes];
     let novoNome = nome;
     nomes[i] = novoNome;
-    nomeEquipes.setState({ nomes });
+    setNomeEquipes({ nomes });
   };
 
   const geraCamposNomeEquipe = (numeroEquipes) => {
