@@ -1,45 +1,46 @@
-import React, { useEffect, useState } from "react";
-import { Button, Form, Input, Container, Row, Col } from "reactstrap";
-import { Redirect } from "react-router-dom";
-import { connect } from "react-redux";
+import React, { useState } from "react";
+import {
+  Button,
+  Form,
+  Input,
+  FormGroup,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  Modal
+} from "reactstrap";
+import classnames from "classnames";
 
 const LoginInstituicaoModal = (props) => {
-  const { modalAberto } = props;
+  const {
+    modalAberto,
+    setModalAberto,
+    usuario,
+    setUsuario,
+    senha,
+    setSenha
+  } = props;
+
+  const [emailFocus, setEmailFocus] = useState(false);
+  const [passwordFocus, setPasswordFocus] = useState(false);
+
   return (
     <Modal
       modalClassName="modal-black"
-      isOpen={formModal}
-      toggle={() => setFormModal(false)}
+      isOpen={modalAberto}
+      toggle={() => setModalAberto(false)}
     >
       <div className="modal-header justify-content-center">
-        <button className="close" onClick={() => setFormModal(false)}>
+        <button className="close" onClick={() => setModalAberto(false)}>
           <i className="tim-icons icon-simple-remove text-white" />
         </button>
         <div className="text-muted text-center ml-auto mr-auto">
-          <h3 className="mb-0">Sign in with</h3>
+          <h3 className="mb-0">Login Instituição</h3>
         </div>
       </div>
       <div className="modal-body">
-        <div className="btn-wrapper text-center">
-          <Button
-            className="btn-neutral btn-icon"
-            color="default"
-            href="#pablo"
-            onClick={(e) => e.preventDefault()}
-          >
-            <img alt="..." src={require("assets/img/github.svg").default} />
-          </Button>
-          <Button
-            className="btn-neutral btn-icon"
-            color="default"
-            href="#pablo"
-            onClick={(e) => e.preventDefault()}
-          >
-            <img alt="..." src={require("assets/img/google.svg").default} />
-          </Button>
-        </div>
         <div className="text-center text-muted mb-4 mt-3">
-          <small>Or sign in with credentials</small>
+          <small>Entre com suas credenciais</small>
         </div>
         <Form role="form">
           <FormGroup className="mb-3">
@@ -54,8 +55,10 @@ const LoginInstituicaoModal = (props) => {
                 </InputGroupText>
               </InputGroupAddon>
               <Input
-                placeholder="Email"
-                type="email"
+                placeholder="Usuário"
+                type="text"
+                value={usuario}
+                onChange={(e) => setUsuario(e.target.value)}
                 onFocus={(e) => setEmailFocus(true)}
                 onBlur={(e) => setEmailFocus(false)}
               />
@@ -73,23 +76,18 @@ const LoginInstituicaoModal = (props) => {
                 </InputGroupText>
               </InputGroupAddon>
               <Input
-                placeholder="Password"
+                placeholder="Senha"
                 type="password"
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
                 onFocus={(e) => setPasswordFocus(true)}
                 onBlur={(e) => setPasswordFocus(false)}
               />
             </InputGroup>
           </FormGroup>
-          <FormGroup check className="mt-3">
-            <Label check>
-              <Input defaultChecked type="checkbox" />
-              <span className="form-check-sign" />
-              Remember me!
-            </Label>
-          </FormGroup>
           <div className="text-center">
             <Button className="my-4" color="primary" type="button">
-              Sign in
+              Entrar
             </Button>
           </div>
         </Form>
@@ -97,3 +95,5 @@ const LoginInstituicaoModal = (props) => {
     </Modal>
   );
 };
+
+export default LoginInstituicaoModal;

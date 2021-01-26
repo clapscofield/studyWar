@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Row, Col } from "reactstrap";
 
 // core components
 import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 import Footer from "components/Footer/Footer.js";
+import LoginInstituicaoModal from "../../loginInstituicao";
 
 const PaginaInicial = (props) => {
   useEffect(() => {
@@ -13,6 +14,10 @@ const PaginaInicial = (props) => {
       document.body.classList.toggle("landing-page");
     };
   }, []);
+
+  const [modalLoginAberto, setModalLoginAberto] = useState(false);
+  const [usuario, setUsuario] = useState("");
+  const [senha, setSenha] = useState("");
 
   return (
     <>
@@ -68,9 +73,7 @@ const PaginaInicial = (props) => {
                     className="btn-link"
                     color="success"
                     href="#pablo"
-                    onClick={(e) =>
-                      e.preventDefault()
-                    } /* TODO inserir link para saber mais */
+                    onClick={(e) => e.preventDefault()}
                     size="sm"
                   >
                     <i className="tim-icons icon-minimal-down" />
@@ -79,14 +82,14 @@ const PaginaInicial = (props) => {
                 <Button
                   color="success"
                   target="_blank"
-                  href="" /* TODO INSERIR LINK PARA cadastro */
+                  href="" /* TODO INSERIR LINK PARA login */
                 >
                   Sou um estudante
                 </Button>
                 <Button
                   color="primary"
                   target="_blank"
-                  href="" /* TODO INSERIR LINK PARA cadastro */
+                  onClick={() => setModalLoginAberto(true)}
                 >
                   Sou uma instituição
                 </Button>
@@ -99,6 +102,14 @@ const PaginaInicial = (props) => {
                 />
               </Col>
             </Row>
+            <LoginInstituicaoModal
+              usuario={usuario}
+              setUsuario={setUsuario}
+              senha={senha}
+              setSenha={setSenha}
+              modalAberto={modalLoginAberto}
+              setModalAberto={setModalLoginAberto}
+            />
           </div>
         </div>
         <section className="section section-lg">

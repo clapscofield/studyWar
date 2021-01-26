@@ -20,8 +20,6 @@ import {
   UncontrolledAlert,
   Col
 } from "reactstrap";
-import { Redirect } from "react-router-dom";
-import CadastroInstituicaoManager from "../CadastroInstituicaoManager";
 import { register } from "../../../redux/actionCreators";
 import { connect } from "react-redux";
 
@@ -33,7 +31,6 @@ const CadastroInstituicao = (props) => {
   const [squares1to6, setSquares1to6] = useState("");
   const [squares7and8, setSquares7and8] = useState("");
 
-  const [redirecionar, setRedirecionar] = useState(null);
   const [botaoHabilitado, setBotaoHabilitado] = useState(true);
   const [fullNameFocus, setFullNameFocus] = useState(false);
   const [descriptionFocus, setDescriptionFocus] = useState(false);
@@ -322,7 +319,6 @@ const CadastroInstituicao = (props) => {
           </div>
         </div>
         <Footer />
-        {redirecionar}
       </div>
     </>
   );

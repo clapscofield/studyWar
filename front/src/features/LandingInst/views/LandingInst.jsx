@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Button, Row, Col } from "reactstrap";
+import { Row, Col } from "reactstrap";
 
 // core components
 import LandingInstNavbar from "components/Navbars/LandingInstNavbar.js";
