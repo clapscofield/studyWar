@@ -7,22 +7,52 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupText,
-  Modal
+  Modal,
+  UncontrolledAlert
 } from "reactstrap";
 import classnames from "classnames";
+import { connect } from "react-redux";
+import { login } from "../../../redux/actionCreators";
+import { Redirect } from "react-router-dom";
 
 const LoginInstituicaoModal = (props) => {
   const {
+    isLoggedIn,
+    message,
     modalAberto,
     setModalAberto,
     usuario,
     setUsuario,
     senha,
-    setSenha
+    setSenha,
+    dispatch,
+    history
   } = props;
 
   const [emailFocus, setEmailFocus] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = () => {
+    setLoading(true);
+
+    if (usuario !== null && usuario !== "" && senha !== null && senha !== "") {
+      dispatch(login(usuario, senha))
+        .then(() => {
+          history.push("/landing-inst");
+          window.location.reload();
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    }
+
+    setLoading(false);
+  };
+
+  if (isLoggedIn) {
+    return <Redirect to="/landing-inst" />;
+  }
 
   return (
     <Modal
@@ -86,14 +116,37 @@ const LoginInstituicaoModal = (props) => {
             </InputGroup>
           </FormGroup>
           <div className="text-center">
-            <Button className="my-4" color="primary" type="button">
+            <Button
+              className="my-4"
+              color="primary"
+              type="button"
+              disabled={loading}
+              onClick={() => handleLogin()}
+            >
+              {loading && (
+                <span className="spinner-border spinner-border-sm"></span>
+              )}
               Entrar
             </Button>
           </div>
+          {message && (
+            <UncontrolledAlert color={"danger"}>
+              <span>{message}</span>
+            </UncontrolledAlert>
+          )}
         </Form>
       </div>
     </Modal>
   );
 };
 
-export default LoginInstituicaoModal;
+function mapStateToProps(state) {
+  const { isLoggedIn } = state.auth;
+  const { message } = state.message;
+  return {
+    isLoggedIn,
+    message
+  };
+}
+
+export default connect(mapStateToProps)(LoginInstituicaoModal);

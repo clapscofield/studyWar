@@ -16,8 +16,8 @@ const PaginaInicial = (props) => {
   }, []);
 
   const [modalLoginAberto, setModalLoginAberto] = useState(false);
-  const [usuario, setUsuario] = useState("");
-  const [senha, setSenha] = useState("");
+  const [usuario, setUsuario] = useState(null);
+  const [senha, setSenha] = useState(null);
 
   return (
     <>
