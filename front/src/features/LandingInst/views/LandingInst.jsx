@@ -56,13 +56,6 @@ const LandingInst = (props) => {
                   Dashboard da Instituição <br />
                 </h1>
               </Col>
-              {/*<Col lg="4" md="5">
-                <img
-                  alt="..."
-                  className="img-fluid"
-                  src={require("assets/img/etherum.png").default}
-                />
-  </Col>*/}
             </Row>
           </div>
         </div>
