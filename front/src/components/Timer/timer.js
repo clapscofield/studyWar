@@ -6,6 +6,7 @@ let offset = null, interval = null
 
 // Ainda não 'personalizei' o timer porque vou fazer isso quando formos colocar na página, aí eu mudo tamanho de fonte, botões, etc.
 
+
 class Timer extends React.Component {
   constructor() {
     super();
@@ -68,3 +69,8 @@ class Timer extends React.Component {
 }
 
 ReactDOM.render(<Timer/>, document.getElementById('View'));
+
+
+// <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.min.js"></script>
+// <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.min.js"></script>
+// <div id="View"></div>
