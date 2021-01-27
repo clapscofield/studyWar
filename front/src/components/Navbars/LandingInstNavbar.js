@@ -13,24 +13,15 @@ import {
   Col,
   UncontrolledTooltip,
 } from "reactstrap";
-import { logout } from "../../redux/actionCreators";
 
 const LandingInstNavbar = (props) => {
-  const { history, dispatch } = props;
 
   const [collapseOpen, setCollapseOpen] = React.useState(false);
   const [collapseOut, setCollapseOut] = React.useState("");
   const [color, setColor] = React.useState("navbar-transparent");
 
   const handleSair = () => {
-    dispatch(logout())
-      .then(() => {
-        history.push("/pagina-inicial");
-        window.location.reload();
-      })
-      .catch(() => {
-        console.log("Error");
-      });
+    console.log('SAIR');
   };
 
   React.useEffect(() => {

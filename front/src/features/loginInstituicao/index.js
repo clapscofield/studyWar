@@ -1,1 +1,1 @@
-export { default } from "./views/LoginInstituicaoModal";
+export { default } from "./views/loginInstituicaoModal";
