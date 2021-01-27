@@ -6,93 +6,65 @@ let offset = null, interval = null
 
 // Ainda não 'personalizei' o timer porque vou fazer isso quando formos colocar na página, aí eu mudo tamanho de fonte, botões, etc.
 
-export default class Timer extends Component {
-  static get propTypes () {
-    return {
-      options: PropTypes.object
-    }
+class Timer extends React.Component {
+  constructor() {
+    super();
+    this.state = { time: {}, seconds: 5 };
+    this.timer = 0;
+    this.startTimer = this.startTimer.bind(this);
+    this.countDown = this.countDown.bind(this);
   }
 
-  constructor(props) {
-    super(props)
-    this.state = { clock: 0, time: '' }
+  secondsToTime(secs){
+    let hours = Math.floor(secs / (60 * 60));
+
+    let divisor_for_minutes = secs % (60 * 60);
+    let minutes = Math.floor(divisor_for_minutes / 60);
+
+    let divisor_for_seconds = divisor_for_minutes % 60;
+    let seconds = Math.ceil(divisor_for_seconds);
+
+    let obj = {
+      "h": hours,
+      "m": minutes,
+      "s": seconds
+    };
+    return obj;
   }
 
   componentDidMount() {
-    this.play()
+    let timeLeftVar = this.secondsToTime(this.state.seconds);
+    this.setState({ time: timeLeftVar });
   }
 
-  componentWillUnmount() {
-    this.pause()
-  }
-
-  pause() {
-    if (interval) {
-      clearInterval(interval)
-      interval = null
+  startTimer() {
+    if (this.timer == 0 && this.state.seconds > 0) {
+      this.timer = setInterval(this.countDown, 1000);
     }
   }
 
-  play() {
-    if (!interval) {
-      offset = Date.now()
-      interval = setInterval(this.update.bind(this), this.props.options.delay)
+  countDown() {
+    // Remove one second, set state so a re-render happens.
+    let seconds = this.state.seconds - 1;
+    this.setState({
+      time: this.secondsToTime(seconds),
+      seconds: seconds,
+    });
+    
+    // Check if we're at zero.
+    if (seconds == 0) { 
+      clearInterval(this.timer);
     }
-  }
-
-  reset() {
-    let clockReset = 0
-    this.setState({clock: clockReset })
-    let time = SecondsTohhmmss(clockReset / 1000)
-    this.setState({time: time })
-  }
-
-  update() {
-    let clock = this.state.clock
-    clock += this.calculateOffset()
-    this.setState({clock: clock })
-    let time = SecondsTohhmmss(clock / 1000)
-    this.setState({time: time })
-  }
-
-  calculateOffset() {
-    let now = Date.now()
-    let newOffset = now - offset
-    offset = now
-    return newOffset
   }
 
   render() {
-    const timerStyle = {
-      margin: "0px",
-      padding: "2em"
-    };
-
-    const buttonStyle = {
-      background: "#fff",
-      color: "#666",
-      border: "1px solid #ddd",
-      marginRight: "5px",
-      padding: "10px",
-      fontWeight: "200"
-    };
-
-    const secondsStyles = {
-      fontSize: "200%",
-      fontWeight: "200",
-      lineHeight: "1.5",
-      margin: "0",
-      color: "#666"
-    };
-
-    return (
-      <div style={timerStyle} className="react-timer">
-        <h3 style={secondsStyles} className="seconds"> {this.state.time} {this.props.prefix}</h3>
-        <br />
-        <button onClick={this.reset.bind(this)} style={buttonStyle} >reset</button>
-        <button onClick={this.play.bind(this)} style={buttonStyle} >play</button>
-        <button onClick={this.pause.bind(this)} style={buttonStyle} >pause</button>
+    return(
+      <div>
+        <button onClick={this.startTimer}>Start</button>
+        m: {this.state.time.m} s: {this.state.time.s}
       </div>
-    )
+    );
   }
 }
+
+ReactDOM.render(<Timer/>, document.getElementById('View'));
