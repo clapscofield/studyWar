@@ -12,9 +12,13 @@ import {
   Row,
   Col,
   UncontrolledTooltip,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
+  UncontrolledDropdown,
 } from "reactstrap";
 
-export default function LandingInstNavbar() {
+export default function LandingEstNavbar() {
   const [collapseOpen, setCollapseOpen] = React.useState(false);
   const [collapseOut, setCollapseOut] = React.useState("");
   const [color, setColor] = React.useState("navbar-transparent");
@@ -94,24 +98,48 @@ export default function LandingInstNavbar() {
             </Row>
           </div>
           <Nav navbar>
+          <UncontrolledDropdown nav>
+                      <DropdownToggle
+                        aria-expanded={false}
+                        aria-haspopup={true}
+                        caret
+                        color="primary"
+                        data-toggle="dropdown"
+                        href=""
+                        id="navbarDropdownMenuLink"
+                        nav
+                      >
+                      <Button className="btn-round" color="primary" type="button">
+                       <i className="tim-icons icon-world" />
+                         Guerra de Estudos
+                       </Button>
+                      </DropdownToggle>
+                      <DropdownMenu aria-labelledby="navbarDropdownMenuLink">
+                        <DropdownItem
+                          href=""
+                        >
+                          Começar Estudo
+                        </DropdownItem>
+                        <DropdownItem
+                          href=""
+                        >
+                          Visualizar Guerra
+                        </DropdownItem>
+                      </DropdownMenu>
+                      </UncontrolledDropdown>
             <NavItem>
-              <Button
-                className="nav-link d-none d-lg-block"
+                <Button
+                className="btn-simple btn-round"
                 color="primary"
-                target="_blank"
-                href=""/* TODO INSERIR LINK PARA O CONHECA */
-              > 
-                <i className="tim-icons icon-world" /> New Study War
-              </Button>
+                type="button"
+                href=""
+                >
+                Loja      {/*COLOCAR MOEDAS DO ALUNO AQUI */}
+                </Button>
             </NavItem>
             <NavItem>
               <NavLink href="" /* TODO INSERIR LINK*/> 
-                Alunos participantes
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="" /* TODO INSERIR LINK*/>
-                Premiações
+                Visualizar turma
               </NavLink>
             </NavItem>
             <NavItem>
