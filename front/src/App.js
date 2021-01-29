@@ -20,8 +20,11 @@ const App = props => {
       <Switch>
         <Route path="/pagina-inicial" render={(props) => <PaginaInicial {...props} />} />
         <Route path="/cadastro-instituicao" render={(props) => <CadastroInstituicao {...props} />} />
+
+
+        <Route path="/landing-inst" render={(props) => <LandingInst {...props} />}  />
         <Route path="/criar-guerra" render={(props) => <CriarGuerraEstudos {...props} />} /> 
-        <Route path="/landing-inst" render={(props) => <LandingInst {...props} />} />
+
         <Route path="/components" render={(props) => <Index {...props} />} />
         <Route
             path="/landing-page"

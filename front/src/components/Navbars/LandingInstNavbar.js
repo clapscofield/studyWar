@@ -14,16 +14,23 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 
-export default function ExamplesNavbarTest() {
+const LandingInstNavbar = (props) => {
+
   const [collapseOpen, setCollapseOpen] = React.useState(false);
   const [collapseOut, setCollapseOut] = React.useState("");
   const [color, setColor] = React.useState("navbar-transparent");
+
+  const handleSair = () => {
+    console.log('SAIR');
+  };
+
   React.useEffect(() => {
     window.addEventListener("scroll", changeColor);
     return function cleanup() {
       window.removeEventListener("scroll", changeColor);
     };
   },[]);
+
   const changeColor = () => {
     if (
       document.documentElement.scrollTop > 99 ||
@@ -37,16 +44,20 @@ export default function ExamplesNavbarTest() {
       setColor("navbar-transparent");
     }
   };
+
   const toggleCollapse = () => {
     document.documentElement.classList.toggle("nav-open");
     setCollapseOpen(!collapseOpen);
   };
+
   const onCollapseExiting = () => {
     setCollapseOut("collapsing-out");
   };
+
   const onCollapseExited = () => {
     setCollapseOut("");
   };
+
   return (
     <Navbar className={"fixed-top " + color} color-on-scroll="100" expand="lg">
       <Container>
@@ -115,7 +126,7 @@ export default function ExamplesNavbarTest() {
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/" /* TODO INSERIR LINK*/>
+              <NavLink onClick={() => handleSair()}>
                 Sair
               </NavLink>
             </NavItem>
@@ -125,3 +136,5 @@ export default function ExamplesNavbarTest() {
     </Navbar>
   );
 }
+
+export default (LandingInstNavbar);
