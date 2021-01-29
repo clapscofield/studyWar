@@ -7,18 +7,31 @@ import {
   Row,
   Col,
   FormGroup,
-  Label
+  Label,
+  UncontrolledAlert,
+  Alert
 } from "reactstrap";
-import { Redirect } from "react-router-dom";
 import Datetime from "react-datetime";
 import Footer from "components/Footer/Footer.js";
 import { connect } from "react-redux";
+import CadastroAlunoManager from "../CadastroAlunoManager";
+import { setMessage } from "../../../redux/actionCreators";
+import { clearMessage } from "../../../redux/actionCreators";
 
 const CadastroAluno = (props) => {
-  const { equipes } = props;
+  const {
+    equipes,
+    idGuerra,
+    idInstituicao,
+    message,
+    setMessageRedux,
+    clearMessageRedux
+  } = props;
 
-  const [redirecionar, setRedirecionar] = useState(null);
   const [botaoHabilitado, setBotaoHabilitado] = useState(true);
+  const [botaoHabilitadoDashboard, setBotaoHabilitadoDashboard] = useState(
+    false
+  );
 
   const [nome, setNome] = useState(null);
   const [matricula, setMatricula] = useState(null);
@@ -26,7 +39,9 @@ const CadastroAluno = (props) => {
   const [turma, setTurma] = useState(null);
   const [email, setEmail] = useState();
   const [senha, setSenha] = useState(null);
-  const [equipe, setEquipe] = useState(null);
+  const [equipe, setEquipe] = useState("Clacla");
+
+  const [sucesso, setSucesso] = useState(false);
 
   useEffect(() => {
     setBotaoHabilitado(
@@ -43,24 +58,53 @@ const CadastroAluno = (props) => {
   ]);
 
   const cadastrarAluno = async () => {
-    // const aluno = {
-    //   dataInicio: moment(dataInicio).format("DD/MM/YYYY"),
-    //   dataFim: moment(dataFim).format("DD/MM/YYYY"),
-    //   identificador: idGuerra,
-    //   numeroTotalEquipes: numeroEquipes,
-    //   numeroAlunosPorEquipe: numeroAlunosPorEquipe
-    // };
-    // const resultado = await CriacaoGuerraEstudosManager.criarGuerraEstudos(
-    //   guerraEstudos
-    // );
-    // /* Nome equipes salvo no redux */
-    // nomeEquipes && inserirEquipe(nomeEquipes);
-    // if (resultado) {
-    //   console.log("Criado com sucesso");
-    //   setRedirecionar(
-    //     <Redirect to={"/pagina-inicial"} />
-    //   ); /*TODO trocar para redirecionar para a continuacao -> PARA CADA EQUIPE INSERIR ALUNOS */
-    // }
+    const aluno = {
+      nome: nome,
+      dataNascimento: dataNascimento,
+      turma: turma,
+      matricula: matricula,
+      email: email,
+      senha: senha,
+      horasEstudadas: "0",
+      idEquipe: equipe,
+      idGuerra: idGuerra,
+      idInstituicao: idInstituicao
+    };
+    const resultado = await CadastroAlunoManager.criarAluno(aluno);
+
+    const resultadoAtualizar = atualizarEquipe();
+
+    if (resultado && resultadoAtualizar) {
+      setBotaoHabilitadoDashboard(true);
+      setSucesso(true);
+      await setMessageRedux("Estudante cadastrado com sucesso!");
+      limparEstados();
+    } else {
+      setSucesso(false);
+      await setMessageRedux("Erro ao cadastrar");
+    }
+  };
+
+  const limparEstados = () => {
+    setNome(null);
+    setDataNascimento(null);
+    setEmail(null);
+    setMatricula(null);
+    setSenha(null);
+    setTurma(null);
+    setEquipe(null);
+    document.getElementById("cadastro-aluno-form").reset();
+  };
+
+  const atualizarEquipe = async () => {
+    const idEquipe = equipe;
+    const idAluno = matricula;
+
+    const resultado = await CadastroAlunoManager.atualizarEquipeAluno(
+      idEquipe,
+      idAluno
+    );
+    return resultado;
   };
 
   return (
@@ -73,7 +117,7 @@ const CadastroAluno = (props) => {
               <Row>
                 <Col>
                   <h1 className="title">Cadastrar Novo Estudante</h1>
-                  <Form className="form">
+                  <Form className="form" id="cadastro-aluno-form">
                     <Row>
                       <Col>
                         <Input
@@ -149,9 +193,14 @@ const CadastroAluno = (props) => {
                         value={equipe}
                         type="select"
                         name="select"
-                        onChange={(e) => setEquipe(e.target.value)}
+                        onChange={(e) => {
+                          setEquipe(e.target.value);
+                        }}
                       >
-                        equipes.forEach(eq => {<option> eq </option>});
+                        {equipes &&
+                          equipes.map((eq) => {
+                            return <option value={eq}> {eq} </option>;
+                          })}
                       </Input>
                     </FormGroup>
                   </Form>
@@ -164,18 +213,36 @@ const CadastroAluno = (props) => {
                     color="primary"
                     size="lg"
                     disabled={!botaoHabilitado}
-                    onClick={() => console.log("oi")}
+                    onClick={() => cadastrarAluno()}
                   >
                     Cadastrar aluno
                   </Button>
                 </Col>
+                <Col>
+                  <Button
+                    className="btn-round"
+                    color="success"
+                    size="lg"
+                    disabled={!botaoHabilitadoDashboard}
+                    href="/landing-inst"
+                    onClick={async () => {
+                      await clearMessageRedux();
+                    }}
+                  >
+                    Ir para dashboard
+                  </Button>
+                </Col>
               </Row>
+              {message && message.message && (
+                <UncontrolledAlert color={sucesso ? "success" : "danger"}>
+                  {message.message}
+                </UncontrolledAlert>
+              )}
               <div className="register-bg" />
             </Container>
           </div>
         </div>
         <Footer />
-        {redirecionar}
       </div>
     </>
   );
@@ -183,8 +250,16 @@ const CadastroAluno = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    equipes: state.equipes
+    equipes: state.equipe && state.equipe.equipes.equipes,
+    idGuerra: state.idGuerra,
+    idInstituicao: state.auth && state.auth.user.usuario,
+    message: state.message
   };
 };
 
-export default connect(mapStateToProps)(CadastroAluno);
+const mapDispatchToProps = (dispatch) => ({
+  setMessageRedux: (message) => dispatch(setMessage(message)),
+  clearMessageRedux: () => dispatch(clearMessage())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CadastroAluno);
