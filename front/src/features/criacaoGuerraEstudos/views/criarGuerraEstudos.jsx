@@ -18,7 +18,7 @@ const CriarGuerraEstudos = (props) => {
   const [dataInicio, setDataInicio] = useState(null);
   const [dataFim, setDataFim] = useState(null);
   const [numeroAlunosPorEquipe, setNumeroAlunosPorEquipe] = useState(null);
-  const [nomeEquipes, setNomeEquipes] = useState();
+  const [nomeEquipes, setNomeEquipes] = useState([]);
   const [numeroEquipes, setNumeroEquipes] = useState(null);
 
   useEffect(() => {
@@ -51,29 +51,29 @@ const CriarGuerraEstudos = (props) => {
 
     if (resultado) {
       console.log("Criado com sucesso");
-      setRedirecionar(
-        <Redirect to={"/pagina-inicial"} />
-      ); /*TODO trocar para redirecionar para a continuacao -> PARA CADA EQUIPE INSERIR ALUNOS */
+      setRedirecionar(<Redirect to={"/cadastro-aluno"} />);
     }
   };
 
-  const handleChangeNomeEquipes = (nome, i) => {
-    let nomes = [...nomeEquipes];
-    let novoNome = nome;
-    nomes[i] = novoNome;
-    setNomeEquipes({ nomes });
-  };
+  //BUG AQUI
+  // const handleChangeNomeEquipes = (nome, i) => {
+  //   let nomes = [...nomeEquipes];
+  //   let novoNome = nome;
+  //   nomes[i] = novoNome;
+  //   setNomeEquipes({ nomes });
+  // };
 
   const geraCamposNomeEquipe = (numeroEquipes) => {
     const inputs = [];
-    for (let i = 1; i <= numeroEquipes; i++) {
+    let i;
+    for (i = 1; i <= numeroEquipes; i++) {
       inputs.push(
         <Input
           value={nomeEquipes[i]}
           placeholder={`Nome da equipe ${i}`}
           id={`input-${i}`}
           type="text"
-          onChange={(e) => handleChangeNomeEquipes(e.event.value, i)}
+          // onChange={(e) => handleChangeNomeEquipes(e.target.value, i)}
           className={"mb-4"}
         />
       );
