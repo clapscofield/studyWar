@@ -8,7 +8,6 @@ import {
   Col,
   FormGroup,
   Label,
-  UncontrolledAlert,
   Alert
 } from "reactstrap";
 import Datetime from "react-datetime";

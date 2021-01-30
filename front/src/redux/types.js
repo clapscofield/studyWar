@@ -4,7 +4,13 @@ export const LOGIN_INSTITUICAO = "LOGIN_INSTITUICAO";
 export const INSERIR_EQUIPE = "INSERIR_EQUIPE";
 
 
-//Login Types
+//Login Types Estudante
+export const LOGIN_SUCCESS_ESTUDANTE = "LOGIN_SUCCESS_ESTUDANTE";
+export const LOGIN_FAIL_ESTUDANTE = "LOGIN_FAIL_ESTUDANTE";
+export const LOGOUT_ESTUDANTE = "LOGOUT_ESTUDANTE";
+
+
+//Login Types Instituicao
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAIL = "REGISTER_FAIL";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
