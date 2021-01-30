@@ -14,6 +14,7 @@ import CadastroInstituicao from "features/cadastroInstituicao";
 import CriarGuerraEstudos from "features/criacaoGuerraEstudos/views/criarGuerraEstudos";
 import LandingInst from "features/LandingInst";
 import LandingEst from "features/LandingEst";
+import CadastroAluno from "features/cadastroAluno/views/CadastroAluno";
 
 const App = props => {
   return (
@@ -25,6 +26,9 @@ const App = props => {
 
         <Route path="/landing-inst" render={(props) => <LandingInst {...props} />}  />
         <Route path="/criar-guerra" render={(props) => <CriarGuerraEstudos {...props} />} /> 
+        <Route path="/cadastro-aluno" render={(props) => <CadastroAluno {...props} />} /> 
+
+
         <Route path="/landing-est" render={(props) => <LandingEst {...props} />} />
 
         <Route path="/components" render={(props) => <Index {...props} />} />

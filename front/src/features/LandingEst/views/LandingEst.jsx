@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
-import { Button, Row, Col } from "reactstrap";
+import { Row, Col } from "reactstrap";
+import { connect } from "react-redux";
 
 // core components
 import LandingEstNavbar from "components/Navbars/LandingEstNavbar.js";
 import Footer from "components/Footer/Footer.js";
 
 const LandingEst = (props) => {
+  const { aluno } = props;
   useEffect(() => {
     document.body.classList.toggle("landing-page");
     // Specify how to clean up after this effect:
@@ -50,19 +52,10 @@ const LandingEst = (props) => {
             src={require("assets/img/cercuri.png").default}
           />
           <div className="content-center">
-            <Row className="row-grid justify-content-between align-items-center text-left">
+            <Row className="row-grid align-items-center text-left">
               <Col lg="8" md="6">
-                <h1 className="text-white">
-                  Dashboard do aluno <br />
-                </h1>
+                <h1 className="text-white">Bem vindo {aluno && aluno.nome}</h1>
               </Col>
-              {/*<Col lg="4" md="5">
-                <img
-                  alt="..."
-                  className="img-fluid"
-                  src={require("assets/img/etherum.png").default}
-                />
-  </Col>*/}
             </Row>
           </div>
         </div>
@@ -81,4 +74,10 @@ const LandingEst = (props) => {
   );
 };
 
-export default LandingEst;
+function mapStateToProps(state) {
+  return {
+    aluno: state.authEstudante && state.authEstudante.user
+  };
+}
+
+export default connect(mapStateToProps)(LandingEst);

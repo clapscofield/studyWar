@@ -5,6 +5,7 @@ import { Button, Row, Col } from "reactstrap";
 import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 import Footer from "components/Footer/Footer.js";
 import LoginInstituicaoModal from "../../loginInstituicao";
+import LoginEstudanteModal from "../../loginEstudante";
 
 const PaginaInicial = (props) => {
   useEffect(() => {
@@ -18,6 +19,10 @@ const PaginaInicial = (props) => {
   const [modalLoginAberto, setModalLoginAberto] = useState(false);
   const [usuario, setUsuario] = useState(null);
   const [senha, setSenha] = useState(null);
+
+  const [modalLoginEstAberto, setModalLoginEstAberto] = useState(false);
+  const [usuarioEst, setUsuarioEst] = useState(null);
+  const [senhaEst, setSenhaEst] = useState(null);
 
   return (
     <>
@@ -82,7 +87,7 @@ const PaginaInicial = (props) => {
                 <Button
                   color="success"
                   target="_blank"
-                  href="" /* TODO INSERIR LINK PARA login */
+                  onClick={() => setModalLoginEstAberto(true)}
                 >
                   Sou um estudante
                 </Button>
@@ -109,6 +114,14 @@ const PaginaInicial = (props) => {
               setSenha={setSenha}
               modalAberto={modalLoginAberto}
               setModalAberto={setModalLoginAberto}
+            />
+            <LoginEstudanteModal
+              usuario={usuarioEst}
+              setUsuario={setUsuarioEst}
+              senha={senhaEst}
+              setSenha={setSenhaEst}
+              modalAberto={modalLoginEstAberto}
+              setModalAberto={setModalLoginEstAberto}
             />
           </div>
         </div>
