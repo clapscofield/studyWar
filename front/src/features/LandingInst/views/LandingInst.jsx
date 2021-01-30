@@ -14,6 +14,50 @@ const LandingInst = (props) => {
     };
   }, []);
 
+  class Table extends React.Component {
+    constructor(props) {
+       super(props)
+       this.state = {
+          students: [
+             { id: 1, name: 'ana', age: 18, email: 'ana@email.com' },
+             { id: 2, name: 'bruno', age: 19, email: 'bruno@email.com' },
+             { id: 3, name: 'carlos', age: 16, email: 'carlos@email.com' },
+             { id: 4, name: 'daniela', age: 17, email: 'daniela@email.com' }
+          ]
+       }
+    }
+
+    render() {
+      return (
+        <div className="container">
+            <h1>Tabela estática de estudantes</h1>
+            <table>
+                <thead>
+                <tr>
+                    <th>nome</th>
+                    <th>idade</th>
+                    <th>email</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {
+                        this.state.students.map((student) => (
+                            <tr key={student.id}>
+                                <td>{student.name}</td>
+                                <td>{student.age}</td>
+                                <td>{student.email}</td>
+                                <td/>
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </table>
+        </div>
+    );
+  }
+}
+
+
   return (
     <>
       <LandingInstNavbar />
@@ -55,6 +99,7 @@ const LandingInst = (props) => {
                 <h1 className="text-white">
                   Dashboard da Instituição <br />
                 </h1>
+                <Table/>
               </Col>
             </Row>
           </div>
