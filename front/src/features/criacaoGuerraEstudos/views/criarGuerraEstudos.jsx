@@ -182,11 +182,10 @@ const CriarGuerraEstudos = (props) => {
                         {createInputs()}{" "}
                         <Button
                           size="sm"
-                          className="btn-round"
+                          className="btn-round mb-4"
                           color="primary"
                           type="button"
                           onClick={addClick}
-                          className="mb-4"
                         >
                           Nova equipe
                         </Button>
