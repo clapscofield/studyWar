@@ -42,6 +42,7 @@ const CadastroAluno = (props) => {
   const [equipe, setEquipe] = useState("Clacla");
 
   const [sucesso, setSucesso] = useState(false);
+  const [alertaAberto, setAlertaAberto] = useState(false);
 
   useEffect(() => {
     setBotaoHabilitado(
@@ -57,7 +58,12 @@ const CadastroAluno = (props) => {
     senha
   ]);
 
+  useEffect(() => {
+    setAlertaAberto(message && message.message);
+  }, [message]);
+
   const cadastrarAluno = async () => {
+    let mensagem = "";
     const aluno = {
       nome: nome,
       dataNascimento: dataNascimento,
@@ -65,24 +71,31 @@ const CadastroAluno = (props) => {
       matricula: matricula,
       email: email,
       senha: senha,
-      horasEstudadas: "0",
+      horasEstudadas: 0,
       idEquipe: equipe,
       idGuerra: idGuerra,
       idInstituicao: idInstituicao
     };
-    const resultado = await CadastroAlunoManager.criarAluno(aluno);
-
-    const resultadoAtualizar = atualizarEquipe();
-
-    if (resultado && resultadoAtualizar) {
-      setBotaoHabilitadoDashboard(true);
-      setSucesso(true);
-      await setMessageRedux("Estudante cadastrado com sucesso!");
-      limparEstados();
-    } else {
-      setSucesso(false);
-      await setMessageRedux("Erro ao cadastrar");
-    }
+    await CadastroAlunoManager.criarAluno(aluno).then(
+      async (response) => {
+        atualizarEquipe();
+        setBotaoHabilitadoDashboard(true);
+        setSucesso(true);
+        limparEstados();
+        mensagem = response && response.status;
+      },
+      async (error) => {
+        const erro =
+          (error.response &&
+            error.response.data &&
+            error.response.data.status) ||
+          error.status ||
+          error.toString();
+        setSucesso(false);
+        mensagem = erro;
+      }
+    );
+    await setMessageRedux(mensagem);
   };
 
   const limparEstados = () => {
@@ -233,10 +246,10 @@ const CadastroAluno = (props) => {
                   </Button>
                 </Col>
               </Row>
-              {message && message.message && (
-                <UncontrolledAlert color={sucesso ? "success" : "danger"}>
-                  {message.message}
-                </UncontrolledAlert>
+              {alertaAberto && (
+                <Alert color={sucesso ? "success" : "danger"}>
+                  {message && message.message}
+                </Alert>
               )}
               <div className="register-bg" />
             </Container>

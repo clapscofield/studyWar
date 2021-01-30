@@ -33,8 +33,8 @@ router.route('/add').post((req, res) => {
     });
 
   newEstudante.save()
-    .then(() => res.status(200).json({status:"Estudante criada"}))
-    .catch(err => res.status(400).json('Error: ' + err));
+    .then(() => res.status(200).json({status:"Estudante cadastrado com sucesso!"}))
+    .catch(err => res.status(400).json({status: 'Error: ' + err}));
 });
 
 module.exports = router;

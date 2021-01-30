@@ -10,7 +10,7 @@ const estudanteSchema = new Schema({
   matricula: {type: String, unique: true},
   email: {type: String},
   senha: {type: String},
-  horasEstudadas: {type: String},
+  horasEstudadas: {type: Number},
   idEquipe: {type: String},
   idGuerra: {type: String},
   idInstituicao: {type: String}
