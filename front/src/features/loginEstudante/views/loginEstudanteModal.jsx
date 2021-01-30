@@ -12,10 +12,10 @@ import {
 } from "reactstrap";
 import classnames from "classnames";
 import { connect } from "react-redux";
-import { login } from "../../../redux/actionCreators";
-import { Redirect } from "react-router-dom";
+import { loginEstudante } from "../../../redux/actionCreators";
+import { Redirect, useHistory } from "react-router-dom";
 
-const LoginInstituicaoModal = (props) => {
+const LoginEstudanteModal = (props) => {
   const {
     isLoggedIn,
     message,
@@ -25,9 +25,10 @@ const LoginInstituicaoModal = (props) => {
     setUsuario,
     senha,
     setSenha,
-    dispatch,
-    history
+    dispatch
   } = props;
+
+  const history = useHistory();
 
   const [emailFocus, setEmailFocus] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
@@ -37,9 +38,10 @@ const LoginInstituicaoModal = (props) => {
     setLoading(true);
 
     if (usuario !== null && usuario !== "" && senha !== null && senha !== "") {
-      dispatch(login(usuario, senha))
+      dispatch(loginEstudante(usuario, senha))
         .then(() => {
-          history.push("/landing-inst");
+          console.log("oi");
+          history.push("/landing-est");
           window.location.reload();
         })
         .catch(() => {
@@ -51,7 +53,7 @@ const LoginInstituicaoModal = (props) => {
   };
 
   if (isLoggedIn) {
-    return <Redirect to="/landing-inst" />;
+    return <Redirect to="/landing-est" />;
   }
 
   return (
@@ -65,7 +67,7 @@ const LoginInstituicaoModal = (props) => {
           <i className="tim-icons icon-simple-remove text-white" />
         </button>
         <div className="text-muted text-center ml-auto mr-auto">
-          <h3 className="mb-0">Login Instituição</h3>
+          <h3 className="mb-0">Login Estudante</h3>
         </div>
       </div>
       <div className="modal-body">
@@ -81,11 +83,11 @@ const LoginInstituicaoModal = (props) => {
             >
               <InputGroupAddon addonType="prepend">
                 <InputGroupText>
-                  <i className="tim-icons icon-email-85" />
+                  <i className="tim-icons icon-badge" />
                 </InputGroupText>
               </InputGroupAddon>
               <Input
-                placeholder="Usuário"
+                placeholder="Matrícula"
                 type="text"
                 value={usuario}
                 onChange={(e) => setUsuario(e.target.value)}
@@ -141,7 +143,7 @@ const LoginInstituicaoModal = (props) => {
 };
 
 function mapStateToProps(state) {
-  const { isLoggedIn } = state.auth;
+  const { isLoggedIn } = state.authEstudante.isLoggedInEstudante;
   const { message } = state.message;
   return {
     isLoggedIn,
@@ -149,4 +151,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(LoginInstituicaoModal);
+export default connect(mapStateToProps)(LoginEstudanteModal);

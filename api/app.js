@@ -29,6 +29,7 @@ app.use(bodyParser.json());
 
 // routes
 require('./routes/auth.routes')(app);
+require('./routes/authEstudante.routes')(app);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
