@@ -17,7 +17,7 @@ exports.signup = (req, res) => {
   
     newInstituicao.save()
       .then(() => res.status(200).json({message:"Instituição cadastrada"}))
-      .catch(err => res.status(400).json('Error: ' + err));
+      .catch(err => res.status(400).json({message: 'Error: ' + err}));
 
 };
 

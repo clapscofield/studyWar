@@ -9,7 +9,7 @@ import { inserirEquipe } from "../../../redux/actionCreators";
 import { connect } from "react-redux";
 
 const CriarGuerraEstudos = (props) => {
-  const { inserirEquipe } = props;
+  const { usuarioInstituicao, inserirEquipe } = props;
 
   const [redirecionar, setRedirecionar] = useState(null);
   const [botaoHabilitado, setBotaoHabilitado] = useState(true);
@@ -18,29 +18,35 @@ const CriarGuerraEstudos = (props) => {
   const [dataInicio, setDataInicio] = useState(null);
   const [dataFim, setDataFim] = useState(null);
   const [numeroAlunosPorEquipe, setNumeroAlunosPorEquipe] = useState(null);
-  const [nomeEquipes, setNomeEquipes] = useState();
-  const [numeroEquipes, setNumeroEquipes] = useState(null);
+  const [nomeEquipes, setNomeEquipes] = useState({ equipes: [] });
 
   useEffect(() => {
-    setBotaoHabilitado(
-      idGuerra && numeroEquipes && numeroAlunosPorEquipe && nomeEquipes
+    setBotaoHabilitado(idGuerra && nomeEquipes && numeroAlunosPorEquipe);
+  }, [setBotaoHabilitado, idGuerra, nomeEquipes, numeroAlunosPorEquipe]);
+
+  const criarEquipes = async () => {
+    await Promise.all(
+      nomeEquipes.equipes.map(async (i) => {
+        const equipe = {
+          idEquipe: i,
+          usuarioInstituicao: usuarioInstituicao,
+          idGuerra: idGuerra
+        };
+        return await CriacaoGuerraEstudosManager.criarEquipe(equipe);
+      })
     );
-  }, [
-    setBotaoHabilitado,
-    idGuerra,
-    numeroEquipes,
-    numeroAlunosPorEquipe,
-    nomeEquipes
-  ]);
+  };
 
   const criarGuerraEstudos = async () => {
     const guerraEstudos = {
       dataInicio: moment(dataInicio).format("DD/MM/YYYY"),
       dataFim: moment(dataFim).format("DD/MM/YYYY"),
       identificador: idGuerra,
-      numeroTotalEquipes: numeroEquipes,
-      numeroAlunosPorEquipe: numeroAlunosPorEquipe
+      numeroAlunosPorEquipe: numeroAlunosPorEquipe,
+      idInstituicao: usuarioInstituicao
     };
+
+    const resultadoEquipes = criarEquipes();
 
     const resultado = await CriacaoGuerraEstudosManager.criarGuerraEstudos(
       guerraEstudos
@@ -49,36 +55,52 @@ const CriarGuerraEstudos = (props) => {
     /* Nome equipes salvo no redux */
     nomeEquipes && inserirEquipe(nomeEquipes);
 
-    if (resultado) {
+    if (resultado && resultadoEquipes) {
       console.log("Criado com sucesso");
-      setRedirecionar(
-        <Redirect to={"/pagina-inicial"} />
-      ); /*TODO trocar para redirecionar para a continuacao -> PARA CADA EQUIPE INSERIR ALUNOS */
+      setRedirecionar(<Redirect to={"/cadastro-aluno"} />);
     }
   };
 
-  const handleChangeNomeEquipes = (nome, i) => {
-    let nomes = [...nomeEquipes];
-    let novoNome = nome;
-    nomes[i] = novoNome;
-    setNomeEquipes({ nomes });
+  function createInputs() {
+    return nomeEquipes.equipes.map((el, i) => (
+      <div key={i} className="w-100">
+        <Col>
+          <Input
+            value={el || ""}
+            placeholder={`Nome da equipe`}
+            id={`input-${i}`}
+            type="text"
+            onChange={handleChange.bind(i)}
+          />
+        </Col>
+        <Col lg={{ size: "auto" }}>
+          <Button
+            className="btn-icon btn-round"
+            color="primary"
+            type="button"
+            onClick={removeClick.bind(i)}
+          >
+            <i className="tim-icons icon-simple-remove" />
+          </Button>
+        </Col>
+      </div>
+    ));
+  }
+
+  function handleChange(event) {
+    let vals = [...nomeEquipes.equipes];
+    vals[this] = event.target.value;
+    setNomeEquipes({ equipes: vals });
+  }
+
+  const addClick = () => {
+    setNomeEquipes({ equipes: [...nomeEquipes.equipes, ""] });
   };
 
-  const geraCamposNomeEquipe = (numeroEquipes) => {
-    const inputs = [];
-    for (let i = 1; i <= numeroEquipes; i++) {
-      inputs.push(
-        <Input
-          value={nomeEquipes[i]}
-          placeholder={`Nome da equipe ${i}`}
-          id={`input-${i}`}
-          type="text"
-          onChange={(e) => handleChangeNomeEquipes(e.event.value, i)}
-          className={"mb-4"}
-        />
-      );
-    }
-    return inputs;
+  const removeClick = () => {
+    let vals = [...nomeEquipes.equipes];
+    vals.splice(this, 1);
+    setNomeEquipes({ equipes: vals });
   };
 
   const validaData = (currentDate) => {
@@ -145,15 +167,6 @@ const CriarGuerraEstudos = (props) => {
                     <Row>
                       <Col>
                         <Input
-                          value={numeroEquipes}
-                          placeholder="Número total de equipes"
-                          type="number"
-                          onChange={(e) => setNumeroEquipes(e.target.value)}
-                          className={"mb-4"}
-                        />
-                      </Col>
-                      <Col>
-                        <Input
                           value={numeroAlunosPorEquipe}
                           placeholder="Número de alunos por equipe"
                           type="number"
@@ -164,7 +177,21 @@ const CriarGuerraEstudos = (props) => {
                         />
                       </Col>
                     </Row>
-                    {geraCamposNomeEquipe(numeroEquipes)}
+                    <Row>
+                      <Col>
+                        {createInputs()}{" "}
+                        <Button
+                          size="sm"
+                          className="btn-round"
+                          color="primary"
+                          type="button"
+                          onClick={addClick}
+                          className="mb-4"
+                        >
+                          Nova equipe
+                        </Button>
+                      </Col>
+                    </Row>
                   </Form>
                   <Button
                     className="btn-round"
@@ -188,10 +215,16 @@ const CriarGuerraEstudos = (props) => {
   );
 };
 
+const mapStateToProps = (state) => {
+  return {
+    usuarioInstituicao: state.auth && state.auth.user.usuario
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     inserirEquipe: (nomeEquipes) => dispatch(inserirEquipe(nomeEquipes))
   };
 };
 
-export default connect(null, mapDispatchToProps)(CriarGuerraEstudos);
+export default connect(mapStateToProps, mapDispatchToProps)(CriarGuerraEstudos);

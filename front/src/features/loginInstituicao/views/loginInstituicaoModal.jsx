@@ -50,9 +50,9 @@ const LoginInstituicaoModal = (props) => {
     setLoading(false);
   };
 
-  // if (isLoggedIn) {
-  //   return <Redirect to="/landing-inst" />;
-  // }
+  if (isLoggedIn) {
+    return <Redirect to="/landing-inst" />;
+  }
 
   return (
     <Modal

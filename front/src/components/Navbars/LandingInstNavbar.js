@@ -109,8 +109,7 @@ const LandingInstNavbar = (props) => {
               <Button
                 className="nav-link d-none d-lg-block"
                 color="primary"
-                target="_blank"
-                href=""/* TODO INSERIR LINK PARA O CONHECA */
+                href="/criar-guerra"
               > 
                 <i className="tim-icons icon-world" /> New Study War
               </Button>
