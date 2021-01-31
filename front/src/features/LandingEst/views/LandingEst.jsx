@@ -89,6 +89,7 @@ const LandingEst = (props) => {
                           </Form>
 
                           <Button
+                          href = "timer-est"
                         className="btn-round"
                         color="primary"
                         size="md"
