@@ -1,17 +1,13 @@
-
 import React, { useEffect, useState, Component } from "react";
 import {
-
-  Form,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
   Row,
   Col,
   Button
 } from "reactstrap";
+import ReactTimer from "@xendora/react-timer";
 import 'react-confirm-alert/src/react-confirm-alert.css'; 
+
+import { CountdownCircleTimer } from 'react-countdown-circle-timer'
 
 // core components
 import LandingEstNavbar from "components/Navbars/LandingEstNavbar.js";
@@ -24,9 +20,23 @@ const LandingEst = (props) => {
     return function cleanup() {
       document.body.classList.toggle("landing-page");
     };
-  }, []);
-  const [tempo, setTempo] = useState("");
 
+  }, []);
+
+// Avisar que se sair da página as horas de estudo serão perdidas - detalhe, não tem como personalizar a mensagem, infelizmente
+
+   useEffect(() => {
+    window.addEventListener('beforeunload', alertUser)
+    return () => {
+      window.removeEventListener('beforeunload', alertUser)
+    }
+  }, [])
+  const alertUser = e => {
+    e.preventDefault()
+    e.returnValue = ''
+  }
+   
+   
   return (
     <>
       <LandingEstNavbar />
@@ -66,43 +76,34 @@ const LandingEst = (props) => {
             <Row className="row-grid justify-content-between align-items-center text-left">
               <Col lg="8" md="6">
                 <h1 className="text-white">
-                  Dashboard do aluno <br />
+                  Bons Estudos! <br />
                 </h1>
-                <h4 className="text-white">
-                  Quanto tempo quer estudar hoje? <br />
-                </h4>
 
-                <Form className="form">
-                        <InputGroup>
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="tim-icons icon-bank" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            value={tempo}
-                            placeholder="Tempo de estudo"
-                            type="text"
-                            onChange={(e) => setTempo(e.target.value)}
-                          />
-                        </InputGroup>
-                          </Form>
+<ReactTimer
 
-                          <Button
+    interval={1000}
+    start={100}
+    end={t => t === 0}
+    onTick={t => t - 1}
+>
+    {time => <span>{time}</span>}
+    
+</ReactTimer>
+<br></br>
+<br></br>
+                      <Button
                         className="btn-round"
                         color="primary"
                         size="md"
+                        //TODO : Criar a função de zerar horas de estudo.
+                        onClick={(e) => { if (window.confirm('Deseja mesmo parar o cronômetro de estudo? Atenção, suas horas de estudo até agora serão perdidas!')) this.deleteItem(e) } }
                       >
-                        Começar
+                        Interromper
                       </Button>
+
+                      
               </Col>
-              {/*<Col lg="4" md="5">
-                <img
-                  alt="..."
-                  className="img-fluid"
-                  src={require("assets/img/etherum.png").default}
-                />
-  </Col>*/}
+              {}
             </Row>
           </div>
         </div>
