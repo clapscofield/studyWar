@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
-import { Row, Col } from "reactstrap";
-import LandingInstManager from "../LandingInstManager"
+import { Row, Col, Container } from "reactstrap";
+import { connect } from "react-redux";
 
 // core components
 import LandingInstNavbar from "components/Navbars/LandingInstNavbar.js";
 import Footer from "components/Footer/Footer.js";
+import TabelaPontosAlunos from "./TabelaPontosAlunos";
 
 const LandingInst = (props) => {
+  const { instituicao } = props;
   useEffect(() => {
     document.body.classList.toggle("landing-page");
     // Specify how to clean up after this effect:
@@ -15,64 +17,8 @@ const LandingInst = (props) => {
     };
   }, []);
 
-
-
-
-  class Table extends React.Component {
-       
-    
-     constructor(props) {
-       super(props)
-       this.state = {
-          students: [
-             //{ id: 1, name: 'ana', age: 18, email: 'ana@email.com' },
-            // { id: 2, name: 'bruno', age: 19, email: 'bruno@email.com' },
-            // { id: 3, name: 'carlos', age: 16, email: 'carlos@email.com' },
-            // { id: 4, name: 'daniela', age: 17, email: 'daniela@email.com' }
-          ]
-       }
-    }
-
-    
-    setData = () => {
-        this.setState = ({students: LandingInstManager.ObterAlunos()});
-        console.log("dados obtidos");
-      }
-
-    render() {
-      return (
-        <div className="container">
-            <h1>Tabela estática de estudantes</h1>
-            <table>
-                <thead>
-                <tr>
-                    <th>nome</th>
-                    <th>turma</th>
-                    <th>email</th>
-                </tr>
-                </thead>
-                <tbody>
-                    {
-                        this.state.students.map((student) => (
-                            <tr key={student.id}>
-                                <td>{student.nome}</td>
-                                <td>{student.turma}</td>
-                                <td>{student.email}</td>
-                                <td/>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </table>
-        </div>
-    );
-  }
-}
-
-
   return (
     <>
-      <LandingInstNavbar />
       <div className="wrapper">
         <div className="page-header">
           <img
@@ -105,17 +51,24 @@ const LandingInst = (props) => {
             className="shapes circle"
             src={require("assets/img/cercuri.png").default}
           />
-          <div className="content-center">
-            <Row className="row-grid justify-content-between align-items-center text-left">
-              <Col lg="8" md="6">
-                <h1 className="text-white">
-                  Dashboard da Instituição <br />
+          <Container className="align-items-center justify-content-left">
+            <LandingInstNavbar />
+            <Row>
+              <Col>
+                <h1 className="text-white mt-10" style={{ marginTop: "100px" }}>
+                  Dashboard {instituicao && instituicao.nome} <br />
                 </h1>
-                
-                <Table/>
               </Col>
             </Row>
-          </div>
+            <Row>
+              <Col>
+                <h3 className="text-white">
+                  Tabela de acompanhamento dos alunos <br />
+                </h3>
+                <TabelaPontosAlunos />
+              </Col>
+            </Row>
+          </Container>
         </div>
         <section className="section section-lg">
           <section className="section">
@@ -132,4 +85,10 @@ const LandingInst = (props) => {
   );
 };
 
-export default LandingInst;
+const mapStateToProps = (state) => {
+  return {
+    instituicao: state.auth && state.auth.user
+  };
+};
+
+export default connect(mapStateToProps)(LandingInst);
