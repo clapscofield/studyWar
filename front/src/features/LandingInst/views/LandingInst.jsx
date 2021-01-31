@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Row, Col } from "reactstrap";
+import LandingInstManager from "../LandingInstManager"
 
 // core components
 import LandingInstNavbar from "components/Navbars/LandingInstNavbar.js";
@@ -14,18 +15,29 @@ const LandingInst = (props) => {
     };
   }, []);
 
+
+
+
   class Table extends React.Component {
-    constructor(props) {
+       
+    
+     constructor(props) {
        super(props)
        this.state = {
           students: [
-             { id: 1, name: 'ana', age: 18, email: 'ana@email.com' },
-             { id: 2, name: 'bruno', age: 19, email: 'bruno@email.com' },
-             { id: 3, name: 'carlos', age: 16, email: 'carlos@email.com' },
-             { id: 4, name: 'daniela', age: 17, email: 'daniela@email.com' }
+             //{ id: 1, name: 'ana', age: 18, email: 'ana@email.com' },
+            // { id: 2, name: 'bruno', age: 19, email: 'bruno@email.com' },
+            // { id: 3, name: 'carlos', age: 16, email: 'carlos@email.com' },
+            // { id: 4, name: 'daniela', age: 17, email: 'daniela@email.com' }
           ]
        }
     }
+
+    
+    setData = () => {
+        this.setState = ({students: LandingInstManager.ObterAlunos()});
+        console.log("dados obtidos");
+      }
 
     render() {
       return (
@@ -35,7 +47,7 @@ const LandingInst = (props) => {
                 <thead>
                 <tr>
                     <th>nome</th>
-                    <th>idade</th>
+                    <th>turma</th>
                     <th>email</th>
                 </tr>
                 </thead>
@@ -43,8 +55,8 @@ const LandingInst = (props) => {
                     {
                         this.state.students.map((student) => (
                             <tr key={student.id}>
-                                <td>{student.name}</td>
-                                <td>{student.age}</td>
+                                <td>{student.nome}</td>
+                                <td>{student.turma}</td>
                                 <td>{student.email}</td>
                                 <td/>
                             </tr>
@@ -99,6 +111,7 @@ const LandingInst = (props) => {
                 <h1 className="text-white">
                   Dashboard da Instituição <br />
                 </h1>
+                
                 <Table/>
               </Col>
             </Row>
