@@ -1,5 +1,19 @@
-import React, { useEffect } from "react";
-import { Button, Row, Col } from "reactstrap";
+import React, { useEffect, useState, Component } from "react";
+import {
+
+  Form,
+  Input,
+  InputGroupAddon,
+  InputGroupText,
+  InputGroup,
+  Row,
+  Col,
+  Button
+} from "reactstrap";
+import ReactTimer from "@xendora/react-timer";
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
+
 
 // core components
 import LandingEstNavbar from "components/Navbars/LandingEstNavbar.js";
@@ -12,8 +26,35 @@ const LandingEst = (props) => {
     return function cleanup() {
       document.body.classList.toggle("landing-page");
     };
-  }, []);
 
+  }, []);
+  const [tempo, setTempo] = useState("");
+  const [botaoHabilitado, setBotaoHabilitado] = useState(true);
+
+  function myFunction (tempo) {
+    return (
+    <ReactTimer
+    interval={1000}
+    start={Number(tempo)}
+    end={t => t === 0}
+    onTick={t => t - 1}
+   >
+    {time => <span>{time}</span>}
+   </ReactTimer>
+   )}
+
+   useEffect(() => {
+    window.addEventListener('beforeunload', alertUser)
+    return () => {
+      window.removeEventListener('beforeunload', alertUser)
+    }
+  }, [])
+  const alertUser = e => {
+    e.preventDefault()
+    e.returnValue = ''
+  }
+   
+   
   return (
     <>
       <LandingEstNavbar />
@@ -55,6 +96,47 @@ const LandingEst = (props) => {
                 <h1 className="text-white">
                   Dashboard do aluno <br />
                 </h1>
+                <h4 className="text-white">
+                  Quanto tempo quer estudar hoje? <br />
+                </h4>
+
+                <Form className="form">
+                        <InputGroup>
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="tim-icons icon-bank" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            value={tempo}
+                            placeholder="Tempo de estudo"
+                            type="text"
+                            onChange={(e) => setTempo(e.target.value)}
+                          />
+                        </InputGroup>
+                          </Form>
+
+                          <Button
+                        className="btn-round"
+                        color="primary"
+                        size="md"
+                        onClick = {(e) =>{ setTempo(e.target.value); myFunction()
+                        
+                         }}
+                      >
+                        Começar
+                      </Button>
+                      <Button
+                        className="btn-round"
+                        color="primary"
+                        size="md"
+                        //TODO : Criar a função de zerar horas de estudo.
+                        onClick={(e) => { if (window.confirm('Deseja mesmo parar o cronômetro de estudo? Atenção, suas horas de estudo até agora serão perdidas!')) this.deleteItem(e) } }
+                      >
+                        Interromper
+                      </Button>
+
+                      
               </Col>
               {/*<Col lg="4" md="5">
                 <img
@@ -80,5 +162,4 @@ const LandingEst = (props) => {
     </>
   );
 };
-
 export default LandingEst;
