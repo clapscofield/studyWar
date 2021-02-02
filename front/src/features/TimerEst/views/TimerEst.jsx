@@ -1,13 +1,9 @@
 import React, { useEffect, useState, Component } from "react";
-import {
-  Row,
-  Col,
-  Button
-} from "reactstrap";
+import { Row, Col, Button } from "reactstrap";
 import ReactTimer from "@xendora/react-timer";
-import 'react-confirm-alert/src/react-confirm-alert.css'; 
+import "react-confirm-alert/src/react-confirm-alert.css";
 
-import { CountdownCircleTimer } from 'react-countdown-circle-timer'
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
 // core components
 import LandingEstNavbar from "components/Navbars/LandingEstNavbar.js";
@@ -20,23 +16,21 @@ const LandingEst = (props) => {
     return function cleanup() {
       document.body.classList.toggle("landing-page");
     };
-
   }, []);
 
-// Avisar que se sair da página as horas de estudo serão perdidas - detalhe, não tem como personalizar a mensagem, infelizmente
+  // Avisar que se sair da página as horas de estudo serão perdidas - detalhe, não tem como personalizar a mensagem, infelizmente
 
-   useEffect(() => {
-    window.addEventListener('beforeunload', alertUser)
+  useEffect(() => {
+    window.addEventListener("beforeunload", alertUser);
     return () => {
-      window.removeEventListener('beforeunload', alertUser)
-    }
-  }, [])
-  const alertUser = e => {
-    e.preventDefault()
-    e.returnValue = ''
-  }
-   
-   
+      window.removeEventListener("beforeunload", alertUser);
+    };
+  }, []);
+  const alertUser = (e) => {
+    e.preventDefault();
+    e.returnValue = "";
+  };
+
   return (
     <>
       <LandingEstNavbar />
@@ -79,29 +73,32 @@ const LandingEst = (props) => {
                   Bons Estudos! <br />
                 </h1>
 
-<ReactTimer
-
-    interval={1000}
-    start={100}
-    end={t => t === 0}
-    onTick={t => t - 1}
->
-    {time => <span>{time}</span>}
-    
-</ReactTimer>
-<br></br>
-<br></br>
-                      <Button
-                        className="btn-round"
-                        color="primary"
-                        size="md"
-                        //TODO : Criar a função de zerar horas de estudo.
-                        onClick={(e) => { if (window.confirm('Deseja mesmo parar o cronômetro de estudo? Atenção, suas horas de estudo até agora serão perdidas!')) this.deleteItem(e) } }
-                      >
-                        Interromper
-                      </Button>
-
-                      
+                <ReactTimer
+                  interval={1000}
+                  start={100}
+                  end={(t) => t === 0}
+                  onTick={(t) => t - 1}
+                >
+                  {(time) => <span>{time}</span>}
+                </ReactTimer>
+                <br></br>
+                <br></br>
+                <Button
+                  className="btn-round"
+                  color="primary"
+                  size="md"
+                  //TODO : Criar a função de zerar horas de estudo.
+                  onClick={(e) => {
+                    if (
+                      window.confirm(
+                        "Deseja mesmo parar o cronômetro de estudo? Atenção, suas horas de estudo até agora serão perdidas!"
+                      )
+                    )
+                      this.deleteItem(e);
+                  }}
+                >
+                  Interromper
+                </Button>
               </Col>
               {}
             </Row>
