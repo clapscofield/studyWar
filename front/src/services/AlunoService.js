@@ -15,6 +15,9 @@ class AlunoService {
             idInstituicao: aluno.idInstituicao
         });
     }
+    async ObterAluno(){
+        return await axios.get("http://localhost:7000/estudante/")
+    }
 }
 
 export default new AlunoService();

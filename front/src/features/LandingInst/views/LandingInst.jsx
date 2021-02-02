@@ -1,11 +1,14 @@
 import React, { useEffect } from "react";
-import { Row, Col } from "reactstrap";
+import { Row, Col, Container } from "reactstrap";
+import { connect } from "react-redux";
 
 // core components
 import LandingInstNavbar from "components/Navbars/LandingInstNavbar.js";
 import Footer from "components/Footer/Footer.js";
+import TabelaPontosAlunos from "./TabelaPontosAlunos";
 
 const LandingInst = (props) => {
+  const { instituicao } = props;
   useEffect(() => {
     document.body.classList.toggle("landing-page");
     // Specify how to clean up after this effect:
@@ -16,7 +19,6 @@ const LandingInst = (props) => {
 
   return (
     <>
-      <LandingInstNavbar />
       <div className="wrapper">
         <div className="page-header">
           <img
@@ -49,15 +51,24 @@ const LandingInst = (props) => {
             className="shapes circle"
             src={require("assets/img/cercuri.png").default}
           />
-          <div className="content-center">
-            <Row className="row-grid justify-content-between align-items-center text-left">
-              <Col lg="8" md="6">
-                <h1 className="text-white">
-                  Dashboard da Instituição <br />
+          <Container className="align-items-center justify-content-left">
+            <LandingInstNavbar />
+            <Row>
+              <Col>
+                <h1 className="text-white mt-10" style={{ marginTop: "100px" }}>
+                  Dashboard {instituicao && instituicao.nome} <br />
                 </h1>
               </Col>
             </Row>
-          </div>
+            <Row>
+              <Col>
+                <h3 className="text-white">
+                  Tabela de acompanhamento dos alunos <br />
+                </h3>
+                <TabelaPontosAlunos />
+              </Col>
+            </Row>
+          </Container>
         </div>
         <section className="section section-lg">
           <section className="section">
@@ -74,4 +85,10 @@ const LandingInst = (props) => {
   );
 };
 
-export default LandingInst;
+const mapStateToProps = (state) => {
+  return {
+    instituicao: state.auth && state.auth.user
+  };
+};
+
+export default connect(mapStateToProps)(LandingInst);
