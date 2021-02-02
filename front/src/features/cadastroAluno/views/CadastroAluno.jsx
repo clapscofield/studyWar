@@ -70,7 +70,7 @@ const CadastroAluno = (props) => {
       matricula: matricula,
       email: email,
       senha: senha,
-      horasEstudadas: 0,
+      minutosEstudados: 0,
       idEquipe: equipe,
       idGuerra: idGuerra,
       idInstituicao: idInstituicao
@@ -264,7 +264,7 @@ const mapStateToProps = (state) => {
   return {
     equipes: state.equipe && state.equipe.equipes.equipes,
     idGuerra: state.idGuerra,
-    idInstituicao: state.auth && state.auth.user.usuario,
+    idInstituicao: state.auth && state.auth.user && state.auth.user.usuario,
     message: state.message
   };
 };

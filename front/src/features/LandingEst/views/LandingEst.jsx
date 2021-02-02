@@ -1,14 +1,5 @@
-import React, { useEffect, useState, Component } from "react";
-import {
-  Form,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
-  Row,
-  Col,
-  Button
-} from "reactstrap";
+import React, { useEffect } from "react";
+import { Container, Row, Col } from "reactstrap";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { connect } from "react-redux";
 
@@ -37,13 +28,15 @@ const LandingEst = (props) => {
             className="path"
             src={require("assets/img/blob.png").default}
           />
-          <div className="content-center">
-            <Row className="row-grid align-items-center text-left">
-              <Col lg="8" md="6">
+          <Container style={{ marginTop: "150px" }}>
+            <Row className="text-left">
+              <Col>
                 <h1 className="text-white">Bem vindo {aluno && aluno.nome}</h1>
-                <TimerEst />
               </Col>
             </Row>
+          </Container>
+          <div className="content-center">
+            <TimerEst matricula={aluno && aluno.matricula} />
           </div>
         </div>
         <section className="section section-lg">

@@ -14,7 +14,6 @@ import CadastroInstituicao from "features/cadastroInstituicao";
 import CriarGuerraEstudos from "features/criacaoGuerraEstudos/views/criarGuerraEstudos";
 import LandingInst from "features/LandingInst";
 import LandingEst from "features/LandingEst";
-import TimerEst from "features/TimerEst";
 import CadastroAluno from "features/cadastroAluno/views/CadastroAluno";
 
 const App = props => {
