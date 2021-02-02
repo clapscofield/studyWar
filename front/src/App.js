@@ -31,7 +31,6 @@ const App = props => {
 
 
         <Route path="/landing-est" render={(props) => <LandingEst {...props} />} />
-        <Route path="/timer-est" render={(props) => <TimerEst {...props} />} />
         <Route path="/components" render={(props) => <Index {...props} />} />
         <Route
             path="/landing-page"
