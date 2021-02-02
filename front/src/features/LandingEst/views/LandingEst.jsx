@@ -27,6 +27,8 @@ const LandingEst = (props) => {
   }, []);
   const [tempo, setTempo] = useState("");
 
+  
+
   return (
     <>
       <LandingEstNavbar />
