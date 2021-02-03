@@ -9,7 +9,7 @@ class AlunoService {
             matricula: aluno.matricula,
             email: aluno.email,
             senha: aluno.senha,
-            horasEstudadas: aluno.horasEstudadas,
+            minutosEstudados: aluno.minutosEstudados,
             idEquipe: aluno.idEquipe,
             idGuerra: aluno.idGuerra,
             idInstituicao: aluno.idInstituicao
@@ -22,6 +22,13 @@ class AlunoService {
     async ObterAlunosPorIdInstituicao(idInstituicao){
         return await axios.get("http://localhost:7000/estudante/obter-idInstituicao", {
             idInstituicao: idInstituicao
+    });
+}
+
+    async AdicionarEstudo(matricula, tempo){
+        return await axios.post("http://localhost:7000/estudante/add-estudo", {
+            matricula: matricula,
+            tempo: tempo
         });
     }
 }

@@ -14,7 +14,7 @@ router.route('/add').post((req, res) => {
     const matricula = req.body.matricula;
     const email = req.body.email;
     const senha = req.body.senha;
-    const horasEstudadas = req.body.horasEstudadas;
+    const minutosEstudados = req.body.minutosEstudados;
     const idEquipe = req.body.idEquipe;
     const idGuerra = req.body.idGuerra;
     const idInstituicao = req.body.idInstituicao;
@@ -26,7 +26,7 @@ router.route('/add').post((req, res) => {
       matricula: matricula,
       email: email,
       senha: senha,
-      horasEstudadas: horasEstudadas,
+      minutosEstudados: minutosEstudados,
       idEquipe: idEquipe,
       idGuerra: idGuerra,
       idInstituicao: idInstituicao
@@ -44,6 +44,20 @@ router.route('/obter-idInstituicao').get((req, res) => {
   Estudante.find({ "idInstituicao": idInstituicao })
     .then(eq => res.json(eq))
     .catch(err => res.status(400).json('Error: ' + err));
+router.route('/add-estudo').post((req, res) => {
+  const matricula = req.body.matricula;
+  const tempo = req.body.tempo;
+
+  Estudante.findOneAndUpdate(
+    { matricula: matricula }, 
+    { $inc: { minutosEstudados: tempo } },
+    function (error, success) {
+         if (error) {
+             console.log(error);
+         } else {
+             console.log(success);
+         }
+  });
 });
 
 module.exports = router;

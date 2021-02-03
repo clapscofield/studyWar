@@ -70,7 +70,7 @@ const CadastroAluno = (props) => {
       matricula: matricula,
       email: email,
       senha: senha,
-      horasEstudadas: 0,
+      minutosEstudados: 0,
       idEquipe: equipe,
       idGuerra: idGuerra,
       idInstituicao: idInstituicao

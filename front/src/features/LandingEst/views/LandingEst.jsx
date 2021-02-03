@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
-import { Row, Col } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
+import "react-confirm-alert/src/react-confirm-alert.css";
 import { connect } from "react-redux";
 
 // core components
 import LandingEstNavbar from "components/Navbars/LandingEstNavbar.js";
 import Footer from "components/Footer/Footer.js";
+import TimerEst from "../../TimerEst";
 
 const LandingEst = (props) => {
   const { aluno } = props;
@@ -16,6 +18,8 @@ const LandingEst = (props) => {
     };
   }, []);
 
+  
+
   return (
     <>
       <LandingEstNavbar />
@@ -26,37 +30,15 @@ const LandingEst = (props) => {
             className="path"
             src={require("assets/img/blob.png").default}
           />
-          <img
-            alt="..."
-            className="path2"
-            src={require("assets/img/path2.png").default}
-          />
-          <img
-            alt="..."
-            className="shapes triangle"
-            src={require("assets/img/triunghiuri.png").default}
-          />
-          <img
-            alt="..."
-            className="shapes wave"
-            src={require("assets/img/waves.png").default}
-          />
-          <img
-            alt="..."
-            className="shapes squares"
-            src={require("assets/img/patrat.png").default}
-          />
-          <img
-            alt="..."
-            className="shapes circle"
-            src={require("assets/img/cercuri.png").default}
-          />
-          <div className="content-center">
-            <Row className="row-grid align-items-center text-left">
-              <Col lg="8" md="6">
+          <Container style={{ marginTop: "150px" }}>
+            <Row className="text-left">
+              <Col>
                 <h1 className="text-white">Bem vindo {aluno && aluno.nome}</h1>
               </Col>
             </Row>
+          </Container>
+          <div className="content-center">
+            <TimerEst matricula={aluno && aluno.matricula} />
           </div>
         </div>
         <section className="section section-lg">

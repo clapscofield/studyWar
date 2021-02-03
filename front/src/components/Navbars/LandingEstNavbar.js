@@ -60,7 +60,7 @@ export default function LandingEstNavbar() {
             StudyWar
           </NavbarBrand>
           <UncontrolledTooltip placement="bottom" target="navbar-brand">
-            Dashboard para Instituições
+            Dashboard para estudantes
           </UncontrolledTooltip>
           <button
             aria-expanded={collapseOpen}
@@ -116,12 +116,12 @@ export default function LandingEstNavbar() {
                       </DropdownToggle>
                       <DropdownMenu aria-labelledby="navbarDropdownMenuLink">
                         <DropdownItem
-                          href=""
+                          href="/landing-est"
                         >
                           Começar Estudo
                         </DropdownItem>
                         <DropdownItem
-                          href=""
+                          href="visualizar-guerra"
                         >
                           Visualizar Guerra
                         </DropdownItem>
@@ -132,15 +132,10 @@ export default function LandingEstNavbar() {
                 className="btn-simple btn-round"
                 color="primary"
                 type="button"
-                href=""
+                href="/lojinha"
                 >
-                Loja      {/*COLOCAR MOEDAS DO ALUNO AQUI */}
+                Loja      
                 </Button>
-            </NavItem>
-            <NavItem>
-              <NavLink href="" /* TODO INSERIR LINK*/> 
-                Visualizar turma
-              </NavLink>
             </NavItem>
             <NavItem>
               <NavLink href="/" /* TODO INSERIR LINK*/>
