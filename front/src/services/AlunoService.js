@@ -15,6 +15,15 @@ class AlunoService {
             idInstituicao: aluno.idInstituicao
         });
     }
+    async ObterAluno(){
+        return await axios.get("http://localhost:7000/estudante/")
+    }
+
+    async ObterAlunosPorIdInstituicao(idInstituicao){
+        return await axios.get("http://localhost:7000/estudante/obter-idInstituicao", {
+            idInstituicao: idInstituicao
+    });
+}
 
     async AdicionarEstudo(matricula, tempo){
         return await axios.post("http://localhost:7000/estudante/add-estudo", {
