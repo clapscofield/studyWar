@@ -269,11 +269,11 @@ const CadastroInstituicao = (props) => {
                         Começar
                       </Button>
                       <a
-                        href="#pablo" /* TODO Colocar o link para a pagina do login */
+                        href="/pagina-inicial" /* TODO Colocar o link para a pagina do login */
                         className="ml-3"
                         onClick={(e) => e.preventDefault()}
                       >
-                        Já tenho conta. Ir para login.
+                        Já tenho conta. Ir para página inicial.
                       </a>
                     </CardFooter>
                   </Card>

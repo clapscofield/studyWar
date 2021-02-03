@@ -1,3 +1,4 @@
+  
 const router = require('express').Router();
 let Estudante = require('../models/estudante.model');
 
@@ -54,4 +55,3 @@ router.route('/add-estudo').post((req, res) => {
 });
 
 module.exports = router;
-
