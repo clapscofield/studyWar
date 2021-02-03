@@ -9,6 +9,7 @@ import {
   InputGroupText,
   Input
 } from "reactstrap";
+import classnames from "classnames";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import ModalCancelamento from "./ModalCancelamento";
 import TimerEstudanteManager from "../TimerEstudanteManager";
@@ -26,28 +27,16 @@ const TimerEst = (props) => {
     };
   }, []);
 
-  // Avisar que se sair da página as horas de estudo serão perdidas - detalhe, não tem como personalizar a mensagem, infelizmente
-
-  // useEffect(() => {
-  //   window.addEventListener("beforeunload", alertUser);
-  //   return () => {
-  //     window.removeEventListener("beforeunload", alertUser);
-  //   };
-  // }, []);
-  // const alertUser = (e) => {
-  //   e.preventDefault();
-  //   e.returnValue = "";
-  // };
-
   const [tempo, setTempo] = useState("");
   const [comecar, setComecar] = useState(false);
   const [botaoDesabilitado, setBotaoDesabilitado] = useState(true);
   const [componenteTempo, setComponenteTempo] = useState(null);
   const [modalAberto, setModalAberto] = useState(false);
   const [terminou, setTerminou] = useState(false);
+  const [timeFocus, setTimeFocus] = useState(false);
 
   const validarTempo = (tempoVal) => {
-    if (tempoVal > 120 || tempoVal === 0) {
+    if (tempoVal >= 120 || tempoVal === 0) {
       setBotaoDesabilitado(true);
     } else {
       setBotaoDesabilitado(false);
@@ -56,6 +45,7 @@ const TimerEst = (props) => {
   };
 
   const getTimeMinutes = (time) => ((time % hourSeconds) / minuteSeconds) | 0;
+  const startTime = () => Date.now() / 1000; // use UNIX timestamp in seconds
 
   const renderTime = (dimension, time) => {
     return (
@@ -66,50 +56,42 @@ const TimerEst = (props) => {
     );
   };
 
-  useEffect(() => {
-    const timerProps = {
-      isPlaying: true,
-      size: 240,
-      strokeWidth: 10
-    };
+  const timerProps = {
+    isPlaying: true,
+    size: 240,
+    strokeWidth: 10
+  };
 
-    const aoTerminar = async () => {
-      setComecar(false);
-      setTerminou(true);
-      await TimerEstudanteManager.adicionarEstudo(matricula, tempo);
-      setTimeout(function () {
-        setTerminou(false);
-      }, 3000);
-    };
+  const aoTerminar = async () => {
+    setComecar(false);
+    setTerminou(true);
+    await TimerEstudanteManager.adicionarEstudo(matricula, tempo);
+  };
 
-    const ComponenteTimer = (remainingTime) => {
-      return (
-        <CountdownCircleTimer
-          {...timerProps}
-          colors={[["#00F2C3"]]}
-          duration={hourSeconds}
-          initialRemainingTime={remainingTime % hourSeconds}
-          // onComplete={(totalTime) => aoTerminar()}
-        >
-          {({ elapsedTime }) =>
-            renderTime("minutos", getTimeMinutes(hourSeconds - elapsedTime))
-          }
-        </CountdownCircleTimer>
-      );
-    };
+  const ComponenteTimer = (remainingTime) => {
+    return (
+      <CountdownCircleTimer
+        {...timerProps}
+        colors={[["#00F2C3"]]}
+        duration={hourSeconds}
+        initialRemainingTime={remainingTime % hourSeconds}
+        onComplete={(totalTime) => {
+          console.log("ola");
+          aoTerminar();
+        }}
+      >
+        {({ elapsedTime }) =>
+          renderTime("minutos", getTimeMinutes(hourSeconds - elapsedTime))
+        }
+      </CountdownCircleTimer>
+    );
+  };
 
-    if (tempo && tempo > 0) {
-      const startTime = Date.now() / 1000; // use UNIX timestamp in seconds
-      const endTime = startTime + tempo * 60; // use UNIX timestamp in seconds
-      const remainingTime = endTime - startTime;
-      console.log(endTime);
-      console.log(endTime - startTime);
-      setComponenteTempo(ComponenteTimer(remainingTime));
-      if (remainingTime === 0) {
-        aoTerminar();
-      }
-    }
-  }, [tempo, matricula]);
+  const iniciarCronometro = () => {
+    const endTime = startTime() + tempo * 60; // use UNIX timestamp in seconds
+    const remainingTime = endTime - startTime();
+    setComponenteTempo(ComponenteTimer(remainingTime));
+  };
 
   return (
     <>
@@ -126,7 +108,11 @@ const TimerEst = (props) => {
                 mas lembre sempre de ter um tempo de descanso entre os estudos.
               </p>
               <Form className="form mb-4 mt-4">
-                <InputGroup>
+                <InputGroup
+                  className={classnames({
+                    "input-group-focus": timeFocus
+                  })}
+                >
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
                       <i className="tim-icons icon-time-alarm" />
@@ -134,6 +120,8 @@ const TimerEst = (props) => {
                   </InputGroupAddon>
                   <Input
                     value={tempo}
+                    onFocus={(e) => setTimeFocus(true)}
+                    onBlur={(e) => setTimeFocus(false)}
                     placeholder="Tempo de estudo em minutos"
                     type="text"
                     maxLength={3}
@@ -145,7 +133,10 @@ const TimerEst = (props) => {
                 className="btn-round"
                 color="success"
                 size="md"
-                onClick={() => setComecar(true)}
+                onClick={() => {
+                  setComecar(true);
+                  iniciarCronometro();
+                }}
                 disabled={botaoDesabilitado}
               >
                 Começar
@@ -196,6 +187,14 @@ const TimerEst = (props) => {
             <h1 className="text-white">
               Parabéns! Você terminou seu tempo de estudos! <br />
             </h1>
+            <Button
+              className="btn-round"
+              color="success"
+              size="md"
+              href="/landing-est"
+            >
+              Voltar para página inicial
+            </Button>
           </Col>
         </Row>
       )}
