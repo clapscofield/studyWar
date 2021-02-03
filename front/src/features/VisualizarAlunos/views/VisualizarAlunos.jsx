@@ -82,7 +82,9 @@ return (
                     <tr>
                     <th>matrícula</th>
                     <th>nome</th>
-                    <th>Instituição</th>
+                    <th>email</th>
+                    <th>equipe</th>
+                    <th>identificador sw</th>
                     </tr>
                 </thead>
                 <tbody>
