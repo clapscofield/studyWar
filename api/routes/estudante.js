@@ -37,5 +37,14 @@ router.route('/add').post((req, res) => {
     .catch(err => res.status(400).json({status: 'Error: ' + err}));
 });
 
+
+router.route('/obter-idInstituicao').get((req, res) => {
+  const idInstituicao = req.body.idInstituicao;
+
+  Estudante.find({ "idInstituicao": idInstituicao })
+    .then(eq => res.json(eq))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
 module.exports = router;
 

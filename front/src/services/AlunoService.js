@@ -18,6 +18,12 @@ class AlunoService {
     async ObterAluno(){
         return await axios.get("http://localhost:7000/estudante/")
     }
+
+    async ObterAlunosPorIdInstituicao(idInstituicao){
+        return await axios.get("http://localhost:7000/estudante/obter-idInstituicao", {
+            idInstituicao: idInstituicao
+        });
+    }
 }
 
 export default new AlunoService();

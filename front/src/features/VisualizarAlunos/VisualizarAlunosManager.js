@@ -1,12 +1,6 @@
 import AlunoService from "../../services/AlunoService";
 
-class LandingInstManager {
-    async ObterAlunos(){
-        return await AlunoService.ObterAluno().then(
-            resposta => resposta && resposta.data
-        )
-    }
-    
+class VisualizarAlunosManager {
     async ObterAlunosPorIdInstituicao(idInstituicao){
         return await AlunoService.ObterAlunosPorIdInstituicao(idInstituicao).then(
             resposta => resposta && resposta.data
@@ -14,4 +8,4 @@ class LandingInstManager {
     }
 }
 
-export default new LandingInstManager();
+export default new VisualizarAlunosManager();
