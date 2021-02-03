@@ -4,7 +4,7 @@ import {
     LOGOUT_ESTUDANTE,
   } from "../types";
   
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("userEstudante"));
   
   const initialState = user
     ? { isLoggedInEstudante: true, user }

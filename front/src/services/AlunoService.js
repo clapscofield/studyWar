@@ -9,10 +9,17 @@ class AlunoService {
             matricula: aluno.matricula,
             email: aluno.email,
             senha: aluno.senha,
-            horasEstudadas: aluno.horasEstudadas,
+            minutosEstudados: aluno.minutosEstudados,
             idEquipe: aluno.idEquipe,
             idGuerra: aluno.idGuerra,
             idInstituicao: aluno.idInstituicao
+        });
+    }
+
+    async AdicionarEstudo(matricula, tempo){
+        return await axios.post("http://localhost:7000/estudante/add-estudo", {
+            matricula: matricula,
+            tempo: tempo
         });
     }
 }
