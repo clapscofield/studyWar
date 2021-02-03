@@ -132,15 +132,10 @@ export default function LandingEstNavbar() {
                 className="btn-simple btn-round"
                 color="primary"
                 type="button"
-                href=""
+                href="/lojinha"
                 >
-                Loja      {/*COLOCAR MOEDAS DO ALUNO AQUI */}
+                Loja      
                 </Button>
-            </NavItem>
-            <NavItem>
-              <NavLink href="" /* TODO INSERIR LINK*/> 
-                Visualizar turma
-              </NavLink>
             </NavItem>
             <NavItem>
               <NavLink href="/" /* TODO INSERIR LINK*/>
