@@ -28,7 +28,10 @@ const PaginaLoja = (props) => {
   return (
     <>
       <LandingEstNavbar />
-      <div className="page-header" style={{ height: "1300px" }}>
+      <div
+        className="page-header"
+        style={{ height: "1300px", maxHeight: "2000px" }}
+      >
         <Container style={{ overflowY: "scroll" }}>
           <Row>
             <Col>
