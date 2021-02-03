@@ -1,4 +1,4 @@
-import { INSERIR_EQUIPE } from './types';
+import { INSERIR_EQUIPE } from '../types';
 
   export const initialState = {
     equipes: []

@@ -5,7 +5,9 @@ const Schema = mongoose.Schema;
 
 const equipeSchema = new Schema({
   idEquipe: {type: String},
-  idAlunos: {type: [String]}
+  idAlunos: {type: [String]},
+  usuarioInstituicao: {type: String},
+  idGuerra: {type: String}
 }, { collection : 'Equipes' });
 
 const Equipes = mongoose.model('Equipes', equipeSchema);

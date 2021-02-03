@@ -17,19 +17,20 @@ import {
   InputGroup,
   Container,
   Row,
+  UncontrolledAlert,
   Col
 } from "reactstrap";
-import { Redirect } from "react-router-dom";
-import CadastroInstituicaoManager from "../CadastroInstituicaoManager";
+import { register } from "../../../redux/actionCreators";
+import { connect } from "react-redux";
 
 import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 import Footer from "components/Footer/Footer.js";
 
 const CadastroInstituicao = (props) => {
+  const { message } = props;
   const [squares1to6, setSquares1to6] = useState("");
   const [squares7and8, setSquares7and8] = useState("");
 
-  const [redirecionar, setRedirecionar] = useState(null);
   const [botaoHabilitado, setBotaoHabilitado] = useState(true);
   const [fullNameFocus, setFullNameFocus] = useState(false);
   const [descriptionFocus, setDescriptionFocus] = useState(false);
@@ -43,6 +44,7 @@ const CadastroInstituicao = (props) => {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [termosCondicoes, setTermosCondicoes] = useState("");
+  const [sucesso, setSucesso] = useState(false);
 
   useEffect(() => {
     setBotaoHabilitado(
@@ -67,15 +69,16 @@ const CadastroInstituicao = (props) => {
       email: email
     };
 
-    const resultadoInstituicao = await CadastroInstituicaoManager.cadastrarInstituicao(
-      instituicao
-    );
-    if (resultadoInstituicao) {
-      console.log("Criado com sucesso");
-      setRedirecionar(
-        <Redirect to={"/pagina-inicial"} />
-      ); /*TODO trocar para redirecionar para pagina de login*/
-    }
+    setSucesso(false);
+
+    props
+      .dispatch(register(instituicao))
+      .then(() => {
+        setSucesso(true);
+      })
+      .catch(() => {
+        setSucesso(false);
+      });
   };
 
   useEffect(() => {
@@ -274,6 +277,11 @@ const CadastroInstituicao = (props) => {
                       </a>
                     </CardFooter>
                   </Card>
+                  {message && (
+                    <UncontrolledAlert color={sucesso ? "success" : "danger"}>
+                      <span>{message}</span>
+                    </UncontrolledAlert>
+                  )}
                 </Col>
               </Row>
               <div className="register-bg" />
@@ -311,10 +319,16 @@ const CadastroInstituicao = (props) => {
           </div>
         </div>
         <Footer />
-        {redirecionar}
       </div>
     </>
   );
 };
 
-export default CadastroInstituicao;
+function mapStateToProps(state) {
+  const { message } = state.message;
+  return {
+    message
+  };
+}
+
+export default connect(mapStateToProps)(CadastroInstituicao);

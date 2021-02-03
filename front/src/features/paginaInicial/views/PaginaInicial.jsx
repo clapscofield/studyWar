@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Row, Col } from "reactstrap";
 
 // core components
 import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 import Footer from "components/Footer/Footer.js";
+import LoginInstituicaoModal from "../../loginInstituicao";
+import LoginEstudanteModal from "../../loginEstudante";
 
 const PaginaInicial = (props) => {
   useEffect(() => {
@@ -13,6 +15,14 @@ const PaginaInicial = (props) => {
       document.body.classList.toggle("landing-page");
     };
   }, []);
+
+  const [modalLoginAberto, setModalLoginAberto] = useState(false);
+  const [usuario, setUsuario] = useState(null);
+  const [senha, setSenha] = useState(null);
+
+  const [modalLoginEstAberto, setModalLoginEstAberto] = useState(false);
+  const [usuarioEst, setUsuarioEst] = useState(null);
+  const [senhaEst, setSenhaEst] = useState(null);
 
   return (
     <>
@@ -68,9 +78,7 @@ const PaginaInicial = (props) => {
                     className="btn-link"
                     color="success"
                     href="#pablo"
-                    onClick={(e) =>
-                      e.preventDefault()
-                    } /* TODO inserir link para saber mais */
+                    onClick={(e) => e.preventDefault()}
                     size="sm"
                   >
                     <i className="tim-icons icon-minimal-down" />
@@ -79,14 +87,14 @@ const PaginaInicial = (props) => {
                 <Button
                   color="success"
                   target="_blank"
-                  href="" /* TODO INSERIR LINK PARA cadastro */
+                  onClick={() => setModalLoginEstAberto(true)}
                 >
                   Sou um estudante
                 </Button>
                 <Button
                   color="primary"
                   target="_blank"
-                  href="" /* TODO INSERIR LINK PARA cadastro */
+                  onClick={() => setModalLoginAberto(true)}
                 >
                   Sou uma instituição
                 </Button>
@@ -99,6 +107,22 @@ const PaginaInicial = (props) => {
                 />
               </Col>
             </Row>
+            <LoginInstituicaoModal
+              usuario={usuario}
+              setUsuario={setUsuario}
+              senha={senha}
+              setSenha={setSenha}
+              modalAberto={modalLoginAberto}
+              setModalAberto={setModalLoginAberto}
+            />
+            <LoginEstudanteModal
+              usuario={usuarioEst}
+              setUsuario={setUsuarioEst}
+              senha={senhaEst}
+              setSenha={setSenhaEst}
+              modalAberto={modalLoginEstAberto}
+              setModalAberto={setModalLoginEstAberto}
+            />
           </div>
         </div>
         <section className="section section-lg">
