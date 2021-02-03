@@ -89,7 +89,7 @@ const TimerEst = (props) => {
           colors={[["#00F2C3"]]}
           duration={hourSeconds}
           initialRemainingTime={remainingTime % hourSeconds}
-          onComplete={() => aoTerminar()}
+          // onComplete={(totalTime) => aoTerminar()}
         >
           {({ elapsedTime }) =>
             renderTime("minutos", getTimeMinutes(hourSeconds - elapsedTime))
@@ -105,6 +105,9 @@ const TimerEst = (props) => {
       console.log(endTime);
       console.log(endTime - startTime);
       setComponenteTempo(ComponenteTimer(remainingTime));
+      if (remainingTime === 0) {
+        aoTerminar();
+      }
     }
   }, [tempo, matricula]);
 
