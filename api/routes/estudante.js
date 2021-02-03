@@ -1,3 +1,4 @@
+  
 const router = require('express').Router();
 let Estudante = require('../models/estudante.model');
 
@@ -37,13 +38,6 @@ router.route('/add').post((req, res) => {
     .catch(err => res.status(400).json({status: 'Error: ' + err}));
 });
 
-
-router.route('/obter-idInstituicao').get((req, res) => {
-  const idInstituicao = req.body.idInstituicao;
-
-  Estudante.find({ "idInstituicao": idInstituicao })
-    .then(eq => res.json(eq))
-    .catch(err => res.status(400).json('Error: ' + err));
 router.route('/add-estudo').post((req, res) => {
   const matricula = req.body.matricula;
   const tempo = req.body.tempo;
@@ -61,4 +55,3 @@ router.route('/add-estudo').post((req, res) => {
 });
 
 module.exports = router;
-
