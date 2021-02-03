@@ -10,12 +10,12 @@ const TabelaPontosAlunos = (props) => {
 
   useEffect(() => {
             setAlunos( [
-                { _id: 1, nome: 'Cedrico', matricula: 1, minutosEstudados: 180, idEquipe: "Lufa-Lufa" },
-                { _id: 2, nome: 'Luna', matricula: 2, minutosEstudados: 90, idEquipe : "Corvinal" },
-                { _id: 3, nome: 'Draco', matricula: 3, minutosEstudados: 90, idEquipe : "Sonserina" },
-                { _id: 4, nome: 'Harry', matricula: 4, minutosEstudados: 120, idEquipe : "Grifinória" },
-                { _id: 5, nome: 'Hermione', matricula: 5, minutosEstudados: 600, idEquipe : "Grifinória" },
-                { _id: 6, nome: 'Goyle', matricula: 6, minutosEstudados: 15, idEquipe : "Sonserina" },
+                { _id: 1, nome: 'Dany', matricula: 1, minutosEstudados: 25, idEquipe: "House Targaryen" },
+                { _id: 2, nome: 'Arya', matricula: 2, minutosEstudados: 60, idEquipe : "House Stark" },
+                { _id: 3, nome: 'Tyrion', matricula: 3, minutosEstudados: 50, idEquipe : "House Lannister" },
+                { _id: 4, nome: 'Yara', matricula: 4, minutosEstudados: 77, idEquipe : "House Greyjoy" },
+                { _id: 5, nome: 'Loras', matricula: 5, minutosEstudados: 46, idEquipe : "House Tyrell" },
+                { _id: 6, nome: 'Robert', matricula: 6, minutosEstudados: 90, idEquipe : "House Baratheon" },
           ])
   }, []);
 
@@ -52,7 +52,7 @@ const TabelaPontosAlunos = (props) => {
             <th className="text-center">Matrícula</th>
             <th>Nome</th>
             <th>Equipe</th>
-            <th className="text-center">Horas estudadas</th>
+            <th className="text-center">Minutos Estudados</th>
             <th className="text-right">Pontos totais</th>
           </tr>
         </thead>
@@ -63,8 +63,8 @@ const TabelaPontosAlunos = (props) => {
                 <td>{aluno.matricula}</td>
                 <td>{aluno.nome}</td>
                 <td>{aluno.idEquipe}</td>
-                <td className="text-center">{aluno.minutosEstudados / 60}</td>
-                <td className="text-center">{aluno.minutosEstudados * 23}</td>
+                <td className="text-center">{aluno.minutosEstudados}</td>
+                <td className="text-center">{aluno.minutosEstudados * 10}</td>
                 <td />
               </tr>
             ))}

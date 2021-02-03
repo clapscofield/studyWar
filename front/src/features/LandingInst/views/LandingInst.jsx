@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Row, Col, Container } from "reactstrap";
 import { connect } from "react-redux";
+import { Progress } from "reactstrap";
 
 // core components
 import LandingInstNavbar from "components/Navbars/LandingInstNavbar.js";
@@ -68,6 +69,43 @@ const LandingInst = (props) => {
                 <TabelaPontosAlunos />
               </Col>
             </Row>
+            
+            <div className="progress-container" style={{marginTop:"50px"}}>
+          <span className="progress-badge">Dany</span>
+          <Progress max="100" value="25">
+            <span className="progress-value">15%</span>
+          </Progress>
+        </div>
+        <div className="progress-container progress-primary">
+          <span className="progress-badge">Arya</span>
+          <Progress max="100" value="60" barClassName="progress-bar-primary">
+            <span className="progress-value">7.5%</span>
+          </Progress>
+        </div>
+        <div className="progress-container progress-danger">
+          <span className="progress-badge">Tyrion</span>
+          <Progress max="100" value="50" barClassName="progress-bar-danger">
+            <span className="progress-value">7.5%</span>
+          </Progress>
+        </div>
+        <div className="progress-container progress-warning">
+          <span className="progress-badge">Yara</span>
+          <Progress max="100" value="77" barClassName="progress-bar-warning">
+            <span className="progress-value">10%</span>
+          </Progress>
+        </div>
+        <div className="progress-container progress-success">
+          <span className="progress-badge">Loras</span>
+          <Progress max="100" value="46" barClassName="progress-bar-success">
+            <span className="progress-value">50%</span>
+          </Progress>
+        </div>
+        <div className="progress-container progress-info">
+          <span className="progress-badge">Robert</span>
+          <Progress max="100" value="90" barClassName="progress-bar-info">
+            <span className="progress-value">1.25%</span>
+          </Progress>
+        </div>
           </Container>
         </div>
         <section className="section section-lg">
