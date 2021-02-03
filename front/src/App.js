@@ -14,7 +14,9 @@ import CadastroInstituicao from "features/cadastroInstituicao";
 import CriarGuerraEstudos from "features/criacaoGuerraEstudos/views/criarGuerraEstudos";
 import LandingInst from "features/LandingInst";
 import LandingEst from "features/LandingEst";
+import TimerEst from "features/TimerEst";
 import CadastroAluno from "features/cadastroAluno/views/CadastroAluno";
+import VisualizarGuerra from "features/visualizarGuerra";
 
 const App = props => {
   return (
@@ -30,6 +32,8 @@ const App = props => {
 
 
         <Route path="/landing-est" render={(props) => <LandingEst {...props} />} />
+        <Route path="/timer-est" render={(props) => <TimerEst {...props} />} />
+        <Route path="/visualizar-guerra" render={(props) => <VisualizarGuerra {...props} />} />
         <Route path="/components" render={(props) => <Index {...props} />} />
         <Route
             path="/landing-page"
