@@ -1,5 +1,9 @@
 # StudyWar - Engenharia de software 
 ## Código disponível na branch DEVELOP. 
+
+
+## Testes: disponível na develop -> para rodar: npm test. 
+
 Sistema de ponte entre instituições e estudantes (sistema com duas visões, uma da instituição e outra para o aluno) para a motivação de estudos por meio da competição entre equipes das horas estudadas. 
 
 **Mais detalhes - BACKLOG e QUADRO DA SPRINT DISPONÍVEL EM**: https://www.notion.so/StudyWar-2f3decdce5f54889b1e6d7c7de6adf84
