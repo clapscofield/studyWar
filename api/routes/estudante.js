@@ -48,10 +48,13 @@ router.route('/add-estudo').post((req, res) => {
     function (error, success) {
          if (error) {
              console.log(error);
+             res.status(400).json({status:"Erro"});
          } else {
              console.log(success);
+             res.status(200).json({status:"Estudos atualizados!"});
          }
   });
+
 });
 
 module.exports = router;
